@@ -1,1 +1,11 @@
+**/*tmp
 **/build/*
+**/.gradle/*
+**/*.idea
+
+# shameless copy from tikape-todo-app
+bin
+.classpath
+.project
+.settings
+
