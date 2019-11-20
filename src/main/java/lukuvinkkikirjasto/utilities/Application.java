@@ -25,11 +25,30 @@ public class Application {
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
-        get("/cake", (request, response) -> {
+        get("/kirja", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
-            model.put("template", "templates/fortytwo.html");
+            model.put("template", "templates/lisaa_kirja.html");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
+
+        post("/kirja", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            String kirjanNimi = request.queryParams("kirjan_nimi");
+            String kirjoittaja = request.queryParams("kirjoittaja");
+
+            if (kirjanNimi.isEmpty() || kirjoittaja.isEmpty()) {
+                model.put("virhe", "Täytäthän kummatkin tiedot!");
+                model.put("template", "templates/lisaa_kirja.html");
+                return new ModelAndView(model, LAYOUT);
+            }
+
+                model.put("vahvistus", kirjanNimi +" tallennettu!");
+                model.put("template", "templates/lisaa_kirja.html");
+                return new ModelAndView(model, LAYOUT);
+
+            //return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
+
 
         /* Esimerkki post-kutsun käsittelystä. Pidetään toistaiseksi menossa mukana.
         post("/user", (request, response) -> {

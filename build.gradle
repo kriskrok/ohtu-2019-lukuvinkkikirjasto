@@ -7,10 +7,15 @@ repositories {
     mavenCentral()
 }
 
+/*
 task( browse, dependsOn: jar, type: JavaExec ) {
     main = 'ohtu.Tester'
     classpath = sourceSets.main.runtimeClasspath
 }
+
+*/
+
+
 
 // https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html TODO: read
 /*project.ext {
@@ -26,16 +31,19 @@ dependencies {
     compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.28.0'
 
+    testCompile 'junit:junit:4.12'
+
 /*  From tikape-todo-app
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.3'
     compile group: 'com.sparkjava', name: 'spark-template-thymeleaf', version: '2.3'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11' */
 }
 
-test {
+/*test {
     testLogging.showStandardStreams = true
     systemProperties System.getProperties()
 }
+*/
 
 // Define the main class for the application
 mainClassName = 'lukuvinkkikirjasto.Application'
