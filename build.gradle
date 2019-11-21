@@ -3,6 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'jacoco'
 
 repositories {
     jcenter()
