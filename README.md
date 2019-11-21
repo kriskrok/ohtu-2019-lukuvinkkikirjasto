@@ -1,5 +1,5 @@
 # ohtu-2019-miniprojekti :cyclone:
-### lukuvinkkikirjasto
+## lukuvinkkikirjasto
 ***
 [ohtu-lukuvinkkikirjasto](https://github.com/kriskrok/ohtu-2019-lukuvinkkikirjasto)
 
@@ -9,7 +9,7 @@ Vaatii toimiakseen seuraavat loitsut:
 - projektin juuressa ./gradlew run
 - selaimen osoiteriviin http://localhost:4567
 
-## Definition of Done - User Story
+### Definition of Done - User Story
 
 #### Määrittely ja suunnittelu:
 - User story määritelty INVEST-mallilla
