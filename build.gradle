@@ -1,24 +1,21 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 apply plugin: 'java'
 apply plugin: 'application'
-
 
 repositories {
     jcenter()
     mavenCentral()
 }
 
-/*
-task( browse, dependsOn: jar, type: JavaExec ) {
+/*task( browse, dependsOn: jar, type: JavaExec ) {
     main = 'ohtu.Tester'
     classpath = sourceSets.main.runtimeClasspath
 }
 
-*/
-
-
-
 // https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html TODO: read
-/*project.ext {
+project.ext {
     cucumberVersion = '4.7.4'
     junitVersion = '4.12'
     seleniumVersion = '3.14.0'
@@ -26,6 +23,7 @@ task( browse, dependsOn: jar, type: JavaExec ) {
 }*/
 
 dependencies {
+    compile 'com.google.guava:guava:20.0'
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.9.1'
     compile group: 'com.sparkjava', name: 'spark-template-thymeleaf', version: '2.7.1'
     compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
@@ -39,12 +37,49 @@ dependencies {
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11' */
 }
 
+// For some reason uncommenting this prevents testout defined in task.withType(Test) to print TODO: why?
 /*test {
     testLogging.showStandardStreams = true
     systemProperties System.getProperties()
-}
-*/
+}*/
 
 // Define the main class for the application
 mainClassName = 'lukuvinkkikirjasto.Application'
 
+
+// see https://stackoverflow.com/a/36130467 for reference
+tasks.withType(Test) {
+    testLogging {
+        // set options for log level LIFECYCLE
+        events TestLogEvent.FAILED,
+                TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED,
+                TestLogEvent.STANDARD_OUT
+        exceptionFormat TestExceptionFormat.FULL
+        showExceptions true
+        showCauses true
+        showStackTraces true
+
+        // set options for log level DEBUG and INFO
+        debug {
+            events TestLogEvent.STARTED,
+                    TestLogEvent.FAILED,
+                    TestLogEvent.PASSED,
+                    TestLogEvent.SKIPPED,
+                    TestLogEvent.STANDARD_ERROR,
+                    TestLogEvent.STANDARD_OUT
+            exceptionFormat TestExceptionFormat.FULL
+        }
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
+    }
+}

@@ -1,6 +1,8 @@
 package lukuvinkkikirjasto.domain;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+//import lukuvinkkikirjasto.domain.Kirja;
 import org.junit.Before;
 import org.junit.Test;
 
