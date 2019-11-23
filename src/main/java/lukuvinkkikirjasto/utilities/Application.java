@@ -1,4 +1,4 @@
-package lukuvinkkikirjasto;
+package lukuvinkkikirjasto.utilities;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,7 +19,7 @@ public class Application {
 
     static String LAYOUT = "templates/layout.html";
     // huom ! user täytyy muokata alla omaksi
-    static final String osoite = "/home/user/ohtu-2019-lukuvinkkikirjasto/data.txt";
+    static final String osoite = "path to the file";
     static List<Kirja> kirjat = new ArrayList<>();
     static PrintWriter wr;
 
