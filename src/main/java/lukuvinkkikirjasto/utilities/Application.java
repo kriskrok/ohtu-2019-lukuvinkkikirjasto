@@ -17,9 +17,9 @@ import lukuvinkkikirjasto.domain.Kirja;
 
 public class Application {
 
-    static String LAYOUT = "templates/layout.html";
+    static String layout = "templates/layout.html";
     // huom ! user täytyy muokata alla omaksi
-    static final String osoite = "path to the file";
+    static final String osoite = "/home/saarasat/Desktop/Lukuvinkit/data.txt";
     static List<Kirja> kirjat = new ArrayList<>();
     static PrintWriter wr;
 
@@ -29,19 +29,19 @@ public class Application {
         get("/", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             model.put("template", "templates/index.html");
-            return new ModelAndView(model, LAYOUT);
+            return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
         get("/index", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             model.put("template", "templates/index.html");
-            return new ModelAndView(model, LAYOUT);
+            return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
         get("/kirja", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             model.put("template", "templates/lisaa_kirja.html");
-            return new ModelAndView(model, LAYOUT);
+            return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
         post("/kirja", (request, response) -> {
@@ -52,7 +52,7 @@ public class Application {
             if (kirjanNimi.isEmpty() || kirjoittaja.isEmpty()) {
                 model.put("virhe", "Täytäthän kummatkin tiedot!");
                 model.put("template", "templates/lisaa_kirja.html");
-                return new ModelAndView(model, LAYOUT);
+                return new ModelAndView(model, layout);
             }
             
             // Sinin lisäys
@@ -63,21 +63,21 @@ public class Application {
 
             model.put("vahvistus", kirjanNimi + " tallennettu!");
             model.put("template", "templates/lisaa_kirja.html");
-            return new ModelAndView(model, LAYOUT);
+            return new ModelAndView(model, layout);
 
-            //return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
 
         get("/katsele", (request, response) -> {
 
             HashMap<String, String> model = new HashMap<>();
 
-            for(int i = 0; i < kirjat.size(); i++) {
-            model.put("kirjalista", kirjat.get(i).toString());
+            for (int i = 0; i < kirjat.size(); i++) {
+                model.put("kirjalista", kirjat.get(i).toString());
             }
             model.put("template", "templates/lukuvinkit.html");
 
-            return new ModelAndView(model, LAYOUT);
+            return new ModelAndView(model, layout);
+
         }, new VelocityTemplateEngine());
 
 
@@ -105,8 +105,8 @@ public class Application {
     
     public static void kirjoitaTiedostoon(String osoite, List<Kirja> teksti) throws Exception {
         wr = new PrintWriter(osoite);
-        for(int i = 0; i < teksti.size(); i++) {
-        wr.println(teksti.get(i).toString());
+        for (int i = 0; i < teksti.size(); i++) {
+            wr.println(teksti.get(i).toString());
         }
         wr.close();
     }
