@@ -26,7 +26,7 @@ Vaatii toimiakseen seuraavat loitsut:
 
 #### Toteutus:
 - Uuden toiminnallisuuden hyväksymiskriteerit täyttyvät 
-- Sovelluksen ajaminen onnistuu toteuksen jälkeen ilman erroreita
+- Sovelluksen ajaminen onnistuu toteuksen jälkeen ilman virheitä
 - Tiimin jäsenet näkevät koko ajan koodin ja testien tilanteen CircleCI-palvelusta
 
 #### Testaus:
@@ -35,7 +35,7 @@ Vaatii toimiakseen seuraavat loitsut:
 - Testien rivikattavuus tulee ominaisuudelle olla Jacocon mukaan vähintään 75 %
 - Ominaisuudelle tehdyt testit menevät läpi
 - Myös vanhat (regressio)testit menevät läpi, eli ominaisuus ei riko aiempaa koodia
-- Checkstylen määritykset toteutuvat ilman erroreita
+- Checkstylen määritykset toteutuvat ilman virheitä
 
 #### Vertaisarviointi: 
 - Uuden ominaisuuden koodi katselmoitu vähintään yhden muun tiimiläisen toimesta
