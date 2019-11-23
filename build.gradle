@@ -20,12 +20,13 @@ repositories {
 }
 
 // https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html TODO: read
+*/
 project.ext {
     cucumberVersion = '4.7.4'
     junitVersion = '4.12'
     seleniumVersion = '3.14.0'
     fluentleniumVersion = '4.3.0'
-}*/
+}
 
 dependencies {
     compile 'com.google.guava:guava:20.0'
@@ -36,6 +37,13 @@ dependencies {
     testCompile 'io.cucumber:cucumber-java:4.7.4' 
     testCompile 'io.cucumber:cucumber-junit:4.7.4'
     testCompile 'junit:junit:4.12'
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-core', version: fluentleniumVersion
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-assertj', version: fluentleniumVersion  
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:seleniumVersion   
+    compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.33.0'
 
 /*  From tikape-todo-app
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.3'
