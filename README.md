@@ -4,7 +4,7 @@
 
 [ohtu-lukuvinkkikirjasto](https://github.com/kriskrok/ohtu-2019-lukuvinkkikirjasto)
 
-[Product backlog](https://docs.google.com/spreadsheets/d/1LkLCp_9h6MrogtcsBB0s-k0wTKV7P8TSKj_3ccCMi-Y/edit#gid=32292256)
+[Product backlog](https://docs.google.com/spreadsheets/d/1LkLCp_9h6MrogtcsBB0s-k0wTKV7P8TSKj_3ccCMi-Y/edit?usp=sharing)
 
 
 ### Ohjelman asennus- ja käyttöohje
