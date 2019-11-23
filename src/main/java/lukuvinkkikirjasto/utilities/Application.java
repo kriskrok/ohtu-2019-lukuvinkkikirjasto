@@ -19,7 +19,7 @@ public class Application {
 
     static String layout = "templates/layout.html";
     // huom ! user täytyy muokata alla omaksi
-    static final String osoite = "/home/saarasat/Desktop/Lukuvinkit/data.txt";
+    static final String osoite = "/home/user/Desktop/Lukuvinkit/data.txt";
     static List<Kirja> kirjat = new ArrayList<>();
     static PrintWriter wr;
 

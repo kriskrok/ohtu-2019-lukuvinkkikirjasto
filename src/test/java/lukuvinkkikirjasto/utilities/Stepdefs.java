@@ -21,13 +21,13 @@ public class Stepdefs {
     String baseUrl = "http://localhost:4567";
     
     // Tests for adding a new book 
+
     @Given("lisaa kirja lukuvinkkeihin is selected")
     public void commandAddNewBookSelected() throws Throwable {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("Lisää kirja lukuvinkkeihin"));
         element.click();  
     }
-
     
     @When("a valid booktitle {string} and writer {string} are entered")
     public void validBookTitleAndWriterAreEntered(String bookTitle, String writer) {
@@ -35,16 +35,41 @@ public class Stepdefs {
     }
 
     @When("an empty booktitle {string} and writer {string} are entered")
-    public void emplyBookTitleIsEntered(String bookTitle, String writer) {
+    public void emptyBookTitleIsEntered(String bookTitle, String writer) {
         bookTitleAndWriterAreGiven(bookTitle, writer);
     }
 
+    @When("a booktitle {string} and empty writer {string} are entered")
+    public void emptyWriterIsEntered(String bookTitle, String writer) {
+        bookTitleAndWriterAreGiven(bookTitle, writer);
+    }
+  
     @Then("system will respond with {string}")
     public void systemWillRespondWith(String expectedOutput) {
         pageHasContent(expectedOutput);
     }
 
+    // Tests for listing the books
+
+    @Given("katsele lukuvinkkeja is selected")
+    public void commandCheckTheReadingTipsIsSelected() throws Throwable {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("Katsele lukuvinkkejä"));
+        element.click();  
+    }
+
+    @Given("one book with title {string} and writer {string} has already been successfully added")
+    public void oneBookSuccessfullyAdded(String bookTitle, String writer) {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("Lisää kirja lukuvinkkeihin"));
+        element.click();
+        bookTitleAndWriterAreGiven(bookTitle, writer);
+        element = driver.findElement(By.linkText("Takaisin etusivulle"));
+        element.click();
+    }
+
     //helper-methods
+
     private void pageHasContent(String content) {
         assertTrue(driver.getPageSource().contains(content));
     }

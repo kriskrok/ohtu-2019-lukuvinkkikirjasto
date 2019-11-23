@@ -4,7 +4,13 @@
 
 <div id="kirjalista">
   <ul>
-  <li><em>$kirjalista</em></li>
+    #if( $kirjalista )
+      <li><em>$kirjalista</em></li>
+    #end
+
+    #if ( !$kirjalista )
+      <li><em>Ei vielä lukuvinkkejä</em></li>
+    #end    
   </ul>
 </div>
 
