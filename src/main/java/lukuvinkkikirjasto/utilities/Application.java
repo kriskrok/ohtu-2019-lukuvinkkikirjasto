@@ -19,8 +19,8 @@ public class Application {
 
     static String layout = "templates/layout.html";
     // huom ! user täytyy muokata alla omaksi
-    static final String osoite = "/home/user/Desktop/Lukuvinkit/data.txt";
-    static List<Kirja> kirjat = new ArrayList<>();
+    static final String osoite = "/home/user/Desktop/data.txt";
+    static List<Kirja> kirjatTiedostoon;
     static PrintWriter wr;
 
     public static void main(String[] args) {
@@ -56,9 +56,17 @@ public class Application {
             }
             
             // Sinin lisäys
+            ArrayList<Kirja>kirjat = request.session().attribute("kirjat");
+            kirjatTiedostoon = new ArrayList<Kirja>();
+            if (kirjat == null) {
+                kirjat = new ArrayList<Kirja>();
+                request.session().attribute("kirjat", kirjat);
+            }
+
             Kirja k = new Kirja(kirjanNimi, kirjoittaja);
             kirjat.add(k);
-            kirjoitaTiedostoon(osoite, kirjat);
+            kirjatTiedostoon.add(k);
+            kirjoitaTiedostoon(osoite, kirjatTiedostoon);
             // Sinin lisäys
 
             model.put("vahvistus", kirjanNimi + " tallennettu!");
@@ -69,11 +77,10 @@ public class Application {
 
         get("/katsele", (request, response) -> {
 
-            HashMap<String, String> model = new HashMap<>();
+            HashMap<String, Object> model = new HashMap<>();
 
-            for (int i = 0; i < kirjat.size(); i++) {
-                model.put("kirjalista", kirjat.get(i).toString());
-            }
+            model.put("kirjat", request.session().attribute("kirjat"));
+            
             model.put("template", "templates/lukuvinkit.html");
 
             return new ModelAndView(model, layout);

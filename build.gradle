@@ -58,7 +58,7 @@ dependencies {
 }*/
 
 // Define the main class for the application
-mainClassName = 'lukuvinkkikirjasto.Application'
+mainClassName = 'lukuvinkkikirjasto/Application'
 
 
 // see https://stackoverflow.com/a/36130467 for reference
