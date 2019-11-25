@@ -59,6 +59,20 @@ tasks.withType(Checkstyle) {
     exclude '**/test/java/*'
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['test/java/**'])
+        })
+    }
+}
+
+
 
 // see https://stackoverflow.com/a/36130467 for reference
 tasks.withType(Test) {
