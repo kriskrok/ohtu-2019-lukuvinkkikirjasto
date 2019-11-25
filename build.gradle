@@ -44,11 +44,6 @@ dependencies {
     compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version:seleniumVersion
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:seleniumVersion   
     compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.33.0'
-
-/*  From tikape-todo-app
-    compile group: 'com.sparkjava', name: 'spark-core', version: '2.3'
-    compile group: 'com.sparkjava', name: 'spark-template-thymeleaf', version: '2.3'
-    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11' */
 }
 
 // For some reason uncommenting this prevents testout defined in task.withType(Test) to print TODO: why?
@@ -58,7 +53,11 @@ dependencies {
 }*/
 
 // Define the main class for the application
-mainClassName = 'lukuvinkkikirjasto/Application'
+mainClassName = 'lukuvinkkikirjasto/utilities/Application'
+
+tasks.withType(Checkstyle) {
+    exclude '**/test/java/*'
+}
 
 
 // see https://stackoverflow.com/a/36130467 for reference

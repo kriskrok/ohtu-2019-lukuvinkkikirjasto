@@ -19,7 +19,7 @@ public class Application {
 
     static String layout = "templates/layout.html";
     // huom ! user täytyy muokata alla omaksi
-    static final String osoite = "/home/user/Desktop/data.txt";
+    static final String osoite = "data.txt";
     static List<Kirja> kirjatTiedostoon;
     static PrintWriter wr;
 
@@ -56,7 +56,7 @@ public class Application {
             }
             
             // Sinin lisäys
-            ArrayList<Kirja>kirjat = request.session().attribute("kirjat");
+            ArrayList<Kirja> kirjat = request.session().attribute("kirjat");
             kirjatTiedostoon = new ArrayList<Kirja>();
             if (kirjat == null) {
                 kirjat = new ArrayList<Kirja>();
