@@ -1,11 +1,24 @@
 # ohtu-2019-miniprojekti :cyclone:
-## lukuvinkkikirjasto
+## [Lukuvinkkikirjasto](https://github.com/kriskrok/ohtu-2019-lukuvinkkikirjasto)
 ***
 
-[ohtu-lukuvinkkikirjasto](https://github.com/kriskrok/ohtu-2019-lukuvinkkikirjasto)
+<p align="center">
+  <img src="https://circleci.com/gh/kriskrok/ohtu-2019-lukuvinkkikirjasto.svg?style=svg" alt="CircleCI">
+  <img src="https://codecov.io/gh/kriskrok/ohtu-2019-lukuvinkkikirjasto/branch/master/graph/badge.svg" alt="codecov">
+  <img src="https://api.codeclimate.com/v1/badges/4f3aa250059799c84945/maintainability" alt="codeclimate">
+</p>
 
-[Product backlog](https://docs.google.com/spreadsheets/d/1LkLCp_9h6MrogtcsBB0s-k0wTKV7P8TSKj_3ccCMi-Y/edit?usp=sharing)
 
+
+#### [Product backlog](https://docs.google.com/spreadsheets/d/1LkLCp_9h6MrogtcsBB0s-k0wTKV7P8TSKj_3ccCMi-Y/edit?usp=sharing)
+
+### Laadunhallinta
+
+[Jatkuva integraatio (CircleCI)](https://circleci.com/gh/kriskrok/ohtu-2019-lukuvinkkikirjasto)
+
+[Testikattavuus (codecov)](https://codecov.io/gh/kriskrok/ohtu-2019-lukuvinkkikirjasto)
+
+[Ylläpidettävyys (codeClimate)](https://codeclimate.com/github/kriskrok/ohtu-2019-lukuvinkkikirjasto/maintainability)
 
 ### Ohjelman asennus- ja käyttöohje
 
