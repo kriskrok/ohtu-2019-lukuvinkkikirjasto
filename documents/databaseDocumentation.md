@@ -1,4 +1,4 @@
-####Tietokantataulujen luontilauseet:
+#### Tietokantataulujen luontilauseet:
 
 create table Lukuvinkki( 
 id integer primary key autoincrement,
@@ -18,7 +18,7 @@ foreign key (lukuvinkki_id)
 	references Lukuvinkki(id)
 ); 
 
-####Esimerkkejä tietokannan käytöstä
+#### Esimerkkejä tietokannan käytöstä
 
 insert into Lukuvinkki (type) values ('book');
 
