@@ -13,6 +13,7 @@ import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
 import lukuvinkkikirjasto.domain.Kirja;
+import lukuvinkkikirjasto.data_access.*;
 
 
 public class Application {
@@ -23,8 +24,12 @@ public class Application {
     static List<Kirja> kirjatTiedostoon;
     static PrintWriter wr;
 
-    public static void main(String[] args) {
-        port(findOutPort());
+    public static void main(String[] args) throws Exception {
+        LukuvinkkiDao dao = new LukuvinkkiDao();
+        dao.getBooks();
+
+
+       /* port(findOutPort());
 
         get("/", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
