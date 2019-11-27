@@ -1,0 +1,18 @@
+  <!--  katsele lukuvinkkejä Sini -->
+
+<h1>Lukuvinkit </h1>
+
+#if ($kirjat)
+ <ul>
+   #foreach ($kirja in $kirjat)
+   <li>$kirja.toString()</li>
+   #end
+ </ul>
+ #else
+  <p>Ei vielä lukuvinkkejä</p>
+#end
+
+<p><a href="index">Takaisin etusivulle</a> </p>
+<p><a href="kirja">Lisää kirja lukuvinkkeihin</a></p>
+
+ 

@@ -1,0 +1,8 @@
+plugins:
+  checkstyle:
+    enabled: true
+    config:
+      file: "config/checkstyle/checkstyle.xml"
+
+exclude_paths:
+- "src/main/java/lukuvinkkikirjasto/utilities/Application.java"

@@ -1,0 +1,112 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+plugins {
+    id 'checkstyle'
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'jacoco'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+/*task( browse, dependsOn: jar, type: JavaExec ) {
+    main = 'ohtu.Tester'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+// https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html TODO: read
+*/
+project.ext {
+    cucumberVersion = '4.7.4'
+    junitVersion = '4.12'
+    seleniumVersion = '3.14.0'
+    fluentleniumVersion = '4.3.0'
+}
+
+dependencies {
+    compile 'com.google.guava:guava:20.0'
+    compile group: 'com.sparkjava', name: 'spark-core', version: '2.9.1'
+    compile group: 'com.sparkjava', name: 'spark-template-thymeleaf', version: '2.7.1'
+    compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.28.0'
+    testCompile 'io.cucumber:cucumber-java:4.7.4' 
+    testCompile 'io.cucumber:cucumber-junit:4.7.4'
+    testCompile 'junit:junit:4.12'
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-core', version: fluentleniumVersion
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-assertj', version: fluentleniumVersion  
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:seleniumVersion   
+    compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.33.0'
+}
+
+// For some reason uncommenting this prevents testout defined in task.withType(Test) to print TODO: why?
+/*test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+}*/
+
+// Define the main class for the application
+mainClassName = 'lukuvinkkikirjasto/utilities/Application'
+
+tasks.withType(Checkstyle) {
+    exclude '**/test/java/*'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['test/java/**'])
+        })
+    }
+}
+
+
+
+// see https://stackoverflow.com/a/36130467 for reference
+tasks.withType(Test) {
+    testLogging {
+        // set options for log level LIFECYCLE
+        events TestLogEvent.FAILED,
+                TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED,
+                TestLogEvent.STANDARD_OUT
+        exceptionFormat TestExceptionFormat.FULL
+        showExceptions true
+        showCauses true
+        showStackTraces true
+
+        // set options for log level DEBUG and INFO
+        debug {
+            events TestLogEvent.STARTED,
+                    TestLogEvent.FAILED,
+                    TestLogEvent.PASSED,
+                    TestLogEvent.SKIPPED,
+                    TestLogEvent.STANDARD_ERROR,
+                    TestLogEvent.STANDARD_OUT
+            exceptionFormat TestExceptionFormat.FULL
+        }
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
+    }
+}
