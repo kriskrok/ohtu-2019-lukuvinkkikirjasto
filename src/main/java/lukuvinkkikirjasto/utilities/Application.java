@@ -26,10 +26,9 @@ public class Application {
 
     public static void main(String[] args) throws Exception {
         LukuvinkkiDao dao = new LukuvinkkiDao();
-        dao.getBooks();
+       // dao.getBooks();
 
-
-       /* port(findOutPort());
+        port(findOutPort());
 
         get("/", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
@@ -37,6 +36,7 @@ public class Application {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        
         get("/index", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             model.put("template", "templates/index.html");
@@ -49,6 +49,28 @@ public class Application {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        post("/kirja", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            String kirjanNimi = request.queryParams("kirjan_nimi");
+            String kirjoittaja = request.queryParams("kirjoittaja");
+
+            if (kirjanNimi.isEmpty() || kirjoittaja.isEmpty()) {
+                model.put("virhe", "Täytäthän kummatkin tiedot!");
+                model.put("template", "templates/lisaa_kirja.html");
+                return new ModelAndView(model, layout);
+            }
+            
+            Kirja k = new Kirja(kirjanNimi, kirjoittaja);
+            
+            dao.newBook(kirjanNimi, kirjoittaja);
+
+            model.put("vahvistus", kirjanNimi + " tallennettu!");
+            model.put("template", "templates/lisaa_kirja.html");
+            return new ModelAndView(model, layout);
+
+        }, new VelocityTemplateEngine());
+
+        /*
         post("/kirja", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             String kirjanNimi = request.queryParams("kirjan_nimi");
@@ -80,11 +102,13 @@ public class Application {
 
         }, new VelocityTemplateEngine());
 
+        */
+
         get("/katsele", (request, response) -> {
 
             HashMap<String, Object> model = new HashMap<>();
 
-            model.put("kirjat", request.session().attribute("kirjat"));
+            model.put("kirjat", dao.getBooks());
             
             model.put("template", "templates/lukuvinkit.html");
 
@@ -122,7 +146,7 @@ public class Application {
         }
         wr.close();
     }
-
+    
     static int findOutPort() {
         if (portFromEnv != null) {
             return Integer.parseInt(portFromEnv);

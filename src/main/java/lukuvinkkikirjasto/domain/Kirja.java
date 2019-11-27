@@ -1,6 +1,7 @@
 package lukuvinkkikirjasto.domain;
 
 public class Kirja extends Lukuvinkki {
+
     private String kirjanNimi;
     private String kirjoittaja;
 
