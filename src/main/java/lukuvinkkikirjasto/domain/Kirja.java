@@ -20,6 +20,7 @@ public class Kirja extends Lukuvinkki {
 
     @Override
     public String toString() {
+        if (kirjoittaja.equals("")) return kirjanNimi;
         return kirjanNimi + " - " + kirjoittaja;
     }
 }

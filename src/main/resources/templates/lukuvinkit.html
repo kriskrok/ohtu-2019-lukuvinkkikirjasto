@@ -1,15 +1,32 @@
-  <!--  katsele lukuvinkkejä Sini -->
 
 <h1>Lukuvinkit </h1>
 
 #if ($kirjat)
  <ul>
    #foreach ($kirja in $kirjat)
-   <li>$kirja.toString()</li>
+   <li>$kirja.toString()
+     <Button><a href="/lukuvinkit/poista/{kirja.id}">poista</a></Button>
+   </li>
    #end
  </ul>
- #else
-  <p>Ei vielä lukuvinkkejä</p>
+#end
+
+#if( $info )
+<div id="info">
+  <p><em>$info</em></p>
+</div>
+#end
+
+#if( $vahvistus )
+<div id="vahvistus" style="color:limegreen">
+    <p><em>$vahvistus</em></p>
+</div>
+#end
+
+#if( $virhe )
+<div id="virhe" style="color:red">
+    <p><em>$virhe</em></p>
+</div>
 #end
 
 <p><a href="index">Takaisin etusivulle</a> </p>
