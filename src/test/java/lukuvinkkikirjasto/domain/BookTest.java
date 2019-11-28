@@ -7,25 +7,25 @@ import org.junit.Test;
 
 public class BookTest {
 
-    private Book kirja;
+    private Book book;
 
     @Before
-    public void luoTestiKirja() {
-        this.kirja = new Book("Kirja", "Kalle");
+    public void createANewBook() {
+        this.book = new Book("Kirja", "Kalle");
     }
 
     @Test
-    public void nimiTallentuu() {
-        assertEquals(kirja.getKirjanNimi(), "Kirja");
+    public void aValidNameCanBeSet() {
+        assertEquals(book.getBooktitle(), "Kirja");
     }
 
     @Test
-    public void kirjoittajaTallentuu() {
-        assertEquals(kirja.getKirjoittaja(), "Kalle");
+    public void aValidWriterCanBeSet() {
+        assertEquals(book.getWriter(), "Kalle");
     }
 
     @Test
-    public void kirjaTulostuuOikein() {
-        assertEquals(kirja.toString(), "Kirja - Kalle");
+    public void theMethodToStringWorks() {
+        assertEquals(book.toString(), "Kirja - Kalle");
     }
 }

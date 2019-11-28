@@ -25,18 +25,17 @@ public class BookDaoForTests implements LukuvinkkiDao {
     }
 
     public void deleteBook(String id) {
+
     }
 
-/*    private Book findByTitle(String title) {
+    private Book findByTitle(String title) {
         for (Book book : books) {
-            if (book.getKirjanNimi().equals(title)) {
+            if (book.getBooktitle().equals(title)) {
                 return book;
             }
         }
 
         return null;
     }
-*/
-
 
 }

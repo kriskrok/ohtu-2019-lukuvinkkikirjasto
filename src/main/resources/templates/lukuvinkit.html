@@ -1,15 +1,23 @@
 
 <h1>Lukuvinkit </h1>
 
-#if ($kirjat)
+#if ($books)
  <ul>
-   #foreach ($kirja in $kirjat)
-   <li>$kirja.toString()
-     <Button><a href="/lukuvinkit/poista/{kirja.id}">poista</a></Button>
+   #foreach ($book in $books)
+   <li>$book.toString()
+     <button onclick="deleteConfirmation()"><a href="/lukuvinkit/poista/${book.lukuvinkki_id}">poista</a></button>
    </li>
    #end
  </ul>
 #end
+
+
+<script>
+  function deleteConfirmation() {
+    alert("Haluatko varmasti poistaa vinkin?")
+  }
+</script>
+
 
 #if( $info )
 <div id="info">
