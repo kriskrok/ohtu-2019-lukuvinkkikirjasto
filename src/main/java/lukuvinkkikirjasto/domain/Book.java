@@ -4,10 +4,12 @@ public class Book extends Lukuvinkki {
 
     private String booktitle;
     private String writer;
+    private int id;
 
-    public Book(String booktitle, String writer) {
+    public Book(String booktitle, String writer, int id) {
         this.booktitle = booktitle;
         this.writer = writer;
+        this.id = id;
     }
 
     public String getBooktitle() {
@@ -16,6 +18,10 @@ public class Book extends Lukuvinkki {
 
     public String getWriter() {
         return writer;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

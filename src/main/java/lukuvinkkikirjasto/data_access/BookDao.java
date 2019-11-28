@@ -41,10 +41,11 @@ public class BookDao implements LukuvinkkiDao {
         while (rs.next()) {
             String name = rs.getString("name");
             String writer = rs.getString("writer");
+            int id = rs.getInt("lukuvinkki_id");
 
             System.out.println(name + " - " + writer);
 
-            Book book = new Book(name, writer);
+            Book book = new Book(name, writer, id);
             books.add(book);
         }
 

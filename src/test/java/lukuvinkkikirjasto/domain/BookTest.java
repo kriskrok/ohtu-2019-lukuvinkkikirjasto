@@ -11,7 +11,7 @@ public class BookTest {
 
     @Before
     public void createANewBook() {
-        this.book = new Book("Kirja", "Kalle");
+        this.book = new Book("Kirja", "Kalle", 1);
     }
 
     @Test

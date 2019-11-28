@@ -22,7 +22,7 @@ public class BookDaoTest {
 
 /*  @Test
     public void aNewBookWithValidInputsCanBeAdded() throws Exception {
-        dao.newBook("TestName", "TestWriter");
+        dao.newBook("TestName", "TestWriter", 2);
         this.books = dao.getBooks();
         assertEquals(1, this.books.size());
     }

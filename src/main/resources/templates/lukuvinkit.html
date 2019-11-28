@@ -1,11 +1,13 @@
 
 <h1>Lukuvinkit </h1>
 
+
 #if ($books)
  <ul>
    #foreach ($book in $books)
+   #set($url = "/lukuvinkit/poista/$book.getId()")
    <li>$book.toString()
-     <button onclick="deleteConfirmation()"><a href="/lukuvinkit/poista/${book.lukuvinkki_id}">poista</a></button>
+     <button onclick="deleteConfirmation()"><a href=$url>poista</a></button>
    </li>
    #end
  </ul>

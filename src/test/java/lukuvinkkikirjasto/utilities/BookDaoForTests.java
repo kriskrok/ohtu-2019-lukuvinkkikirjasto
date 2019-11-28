@@ -10,6 +10,7 @@ import java.util.List;
 
 public class BookDaoForTests implements LukuvinkkiDao {
 
+    int maxId = 1;
     private List<Book> books;
 
     public BookDaoForTests() {
@@ -21,11 +22,16 @@ public class BookDaoForTests implements LukuvinkkiDao {
     }
 
     public void newBook(String name, String writer) {
-        books.add(new Book(name, writer));
+        books.add(new Book(name, writer, generateId()));
     }
 
     public void deleteBook(String id) {
 
+    }
+
+    private int generateId() {
+        this.maxId++;
+        return maxId;
     }
 
     private Book findByTitle(String title) {
@@ -34,8 +40,6 @@ public class BookDaoForTests implements LukuvinkkiDao {
                 return book;
             }
         }
-
         return null;
     }
-
 }
