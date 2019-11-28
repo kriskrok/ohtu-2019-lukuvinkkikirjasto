@@ -5,13 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class KirjaTest {
+public class BookTest {
 
-    private Kirja kirja;
+    private Book kirja;
 
     @Before
     public void luoTestiKirja() {
-        this.kirja = new Kirja("Kirja", "Kalle");
+        this.kirja = new Book("Kirja", "Kalle");
     }
 
     @Test

@@ -10,25 +10,25 @@ import java.util.List;
 
 public class BookDaoForTests implements LukuvinkkiDao {
 
-    private List<Kirja> books;
+    private List<Book> books;
 
     public BookDaoForTests() {
         this.books = new ArrayList<>();
     }
 
-    public List<Kirja> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
     public void newBook(String name, String writer) {
-        books.add(new Kirja(name, writer));
+        books.add(new Book(name, writer));
     }
 
     public void deleteBook(String id) {
     }
 
-/*    private Kirja findByTitle(String title) {
-        for (Kirja book : books) {
+/*    private Book findByTitle(String title) {
+        for (Book book : books) {
             if (book.getKirjanNimi().equals(title)) {
                 return book;
             }

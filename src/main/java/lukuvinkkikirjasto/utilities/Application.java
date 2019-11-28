@@ -12,7 +12,8 @@ import java.util.Properties;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
-import lukuvinkkikirjasto.domain.Kirja;
+
+import lukuvinkkikirjasto.domain.*;
 import lukuvinkkikirjasto.data_access.*;
 
 
@@ -20,7 +21,7 @@ public class Application {
 
     static String layout = "templates/layout.html";
     static final String osoite = "data.txt";
-    static List<Kirja> kirjatTiedostoon;
+    static List<Book> kirjatTiedostoon;
     static PrintWriter wr;
     static LukuvinkkiDao dao;
 
@@ -37,7 +38,7 @@ public class Application {
 
         get("/lukuvinkit", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            List<Kirja> books = dao.getBooks();
+            List<Book> books = dao.getBooks();
             if (books.isEmpty()) {
                 model.put("info", "Ei vielä lukuvinkkejä");
             }
@@ -105,7 +106,7 @@ public class Application {
                 return new ModelAndView(model, layout);
             }
 
-            Kirja k = new Kirja(kirjanNimi, kirjoittaja);
+            Book k = new Book(kirjanNimi, kirjoittaja);
             
             dao.newBook(kirjanNimi, kirjoittaja);
 
@@ -173,7 +174,7 @@ public class Application {
          */
     }
     
-    public static void kirjoitaTiedostoon(String osoite, List<Kirja> teksti) throws Exception {
+    public static void kirjoitaTiedostoon(String osoite, List<Book> teksti) throws Exception {
         wr = new PrintWriter(osoite);
         for (int i = 0; i < teksti.size(); i++) {
             wr.println(teksti.get(i).toString());

@@ -6,8 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
-import lukuvinkkikirjasto.domain.Kirja;
-import lukuvinkkikirjasto.domain.Lukuvinkki;
+import lukuvinkkikirjasto.domain.*;
 
 public class BookDao implements LukuvinkkiDao {
 
@@ -30,14 +29,14 @@ public class BookDao implements LukuvinkkiDao {
         System.out.println("Opened database successfully");
     }
 
-    public List<Kirja> getBooks() throws Exception {
+    public List<Book> getBooks() throws Exception {
         Connection connection = DriverManager.getConnection("jdbc:sqlite:lukuvinkit.db");
         PreparedStatement st = connection.prepareStatement("SELECT * FROM Book");
         ResultSet rs = st.executeQuery();
 
         System.out.println("Kirjavinkit:");
 
-        List<Kirja> books = new ArrayList<>();
+        List<Book> books = new ArrayList<>();
 
         while (rs.next()) {
             String name = rs.getString("name");
@@ -45,8 +44,8 @@ public class BookDao implements LukuvinkkiDao {
 
             System.out.println(name + " - " + writer);
 
-            Kirja kirja = new Kirja(name, writer);
-            books.add(kirja);
+            Book book = new Book(name, writer);
+            books.add(book);
         }
 
         st.close();
@@ -69,19 +68,19 @@ public class BookDao implements LukuvinkkiDao {
         connection.close();
     }
 
-    public void deleteBook(String lukuvinkki_id) throws Exception {
+    public void deleteBook(String id) throws Exception {
         try {
-            Integer.parseInt(lukuvinkki_id);
+            Integer.parseInt(id);
         } catch (Throwable t) {
             return;
         }
 
         Connection connection = DriverManager.getConnection("jdbc:sqlite:lukuvinkit.db");
         PreparedStatement stmt2 = connection.prepareStatement("DELETE FROM Book WHERE lukuvinkki_id = ?");
-        stmt2.setInt(1, Integer.parseInt(lukuvinkki_id));
+        stmt2.setInt(1, Integer.parseInt(id));
         stmt2.execute();
         PreparedStatement stmt = connection.prepareStatement("DELETE FROM Lukuvinkki WHERE id = ?");
-        stmt.setInt(1, Integer.parseInt(lukuvinkki_id));
+        stmt.setInt(1, Integer.parseInt(id));
         stmt.execute();
 
         connection.close();

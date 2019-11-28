@@ -12,7 +12,7 @@ import java.util.*;
 public class BookDaoTest {
 
     private BookDao dao;
-    private List<Kirja> books;
+    private List<Book> books;
 
     @Before
     public void createNewDao() throws Exception {
