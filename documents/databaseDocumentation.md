@@ -27,6 +27,3 @@ CREATE TABLE Lukuvinkki (
 );
 ```
 
-#### Esimerkkejä tietokannan käytöstä
-
-Löytyypi BookDao luokan syövereistä
