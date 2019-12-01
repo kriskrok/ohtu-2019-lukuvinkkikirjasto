@@ -2,6 +2,7 @@
 **/build/*
 **/.gradle/*
 **/*.idea
+**/*.db
 
 # shameless copy from tikape-todo-app
 bin

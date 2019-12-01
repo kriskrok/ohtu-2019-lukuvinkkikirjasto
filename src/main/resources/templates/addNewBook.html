@@ -1,0 +1,33 @@
+<h1>Lisää kirja lukuvinkkeihin</h1>
+
+<p>Syötä lukuvinkkikirjan tiedot:</p>
+
+<form method="POST" action="/kirja">
+    <fieldset>
+        <div class="form-group">
+            <label for="book-title">Kirjan nimi</label>
+            <input type="text" id="book-title" name="book-title" placeholder="kirjan nimi">
+        </div>
+        <div class="form-group">
+            <label for="book-author">Kirjoittaja</label>
+            <input type="text" id="book-author" name="book-author" placeholder="kirjailija">
+        </div>
+        <button type="submit" name="add-book-button" class="btn btn-primary">Lisää</button>
+    </fieldset>
+</form>
+
+#if( $vahvistus )
+<div id="vahvistus" style="color:limegreen">
+    <p><em>$vahvistus</em></p>
+</div>
+#end
+
+#if( $virhe )
+<div id="virhe" style="color:red">
+    <p><em>$virhe</em></p>
+</div>
+#end
+<p><a href="lukuvinkit">Katsele lukuvinkkejä</a></p>
+<p><a href="index">Takaisin etusivulle</a> </p>
+
+

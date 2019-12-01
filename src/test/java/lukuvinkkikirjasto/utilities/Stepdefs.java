@@ -28,6 +28,14 @@ public class Stepdefs {
         WebElement element = driver.findElement(By.linkText("Lisää kirja lukuvinkkeihin"));
         element.click();  
     }
+
+    @Given("option kirja is selected")
+    public void commandTypeOfTipIsBookIsSelected() throws Throwable {
+        WebElement element = driver.findElement(By.name("book"));
+        element.click();  
+        element = driver.findElement(By.name("typeOfReadingTipButton"));
+        element.click();
+    }
     
     @When("a valid booktitle {string} and writer {string} are entered")
     public void validBookTitleAndWriterAreEntered(String bookTitle, String writer) {
@@ -41,6 +49,21 @@ public class Stepdefs {
 
     @When("a booktitle {string} and empty writer {string} are entered")
     public void emptyWriterIsEntered(String bookTitle, String writer) {
+        bookTitleAndWriterAreGiven(bookTitle, writer);
+    }
+
+    @When("too short booktitle {string} and writer {string} are entered")
+    public void tooShortTitleIsEntered(String bookTitle, String writer) {
+        bookTitleAndWriterAreGiven(bookTitle, writer);
+    }
+
+    @When("too long booktitle {string} and writer {string} are entered")
+    public void tooLongTitleIsEntered(String bookTitle, String writer) {
+        bookTitleAndWriterAreGiven(bookTitle, writer);
+    }
+
+    @When("a valid booktitle {string} and a too long writer name {string} are entered")
+    public void tooLongWriterNameIsEntered(String bookTitle, String writer) {
         bookTitleAndWriterAreGiven(bookTitle, writer);
     }
   
@@ -63,6 +86,10 @@ public class Stepdefs {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("Lisää kirja lukuvinkkeihin"));
         element.click();
+        element = driver.findElement(By.name("book"));
+        element.click();  
+        element = driver.findElement(By.name("typeOfReadingTipButton"));
+        element.click();
         bookTitleAndWriterAreGiven(bookTitle, writer);
         element = driver.findElement(By.linkText("Takaisin etusivulle"));
         element.click();
@@ -70,18 +97,18 @@ public class Stepdefs {
 
     //helper-methods
 
+
     private void pageHasContent(String content) {
         assertTrue(driver.getPageSource().contains(content));
     }
 
     private void bookTitleAndWriterAreGiven(String bookTitle, String writer) {
         pageHasContent("Syötä lukuvinkkikirjan tiedot:");
-        WebElement element = driver.findElement(By.name("kirjan_nimi"));
+        WebElement element = driver.findElement(By.name("book-title"));
         element.sendKeys(bookTitle);
-        element = driver.findElement(By.name("kirjoittaja"));
+        element = driver.findElement(By.name("book-author"));
         element.sendKeys(writer);
-        element = driver.findElement(By.name("lisaa"));
+        element = driver.findElement(By.name("add-book-button"));
         element.submit(); 
     }
-
 }

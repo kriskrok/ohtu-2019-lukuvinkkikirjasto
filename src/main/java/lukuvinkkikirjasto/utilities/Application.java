@@ -1,88 +1,119 @@
 package lukuvinkkikirjasto.utilities;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
-import lukuvinkkikirjasto.domain.Kirja;
+
+
+
+import lukuvinkkikirjasto.domain.*;
+import lukuvinkkikirjasto.data_access.*;
 
 
 public class Application {
 
     static String layout = "templates/layout.html";
-    // huom ! user täytyy muokata alla omaksi
-    static final String osoite = "data.txt";
-    static List<Kirja> kirjatTiedostoon;
-    static PrintWriter wr;
+    static Database db;
+    static LukuvinkkiDao dao;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+
+        if (db == null) {
+            db = new Database();
+        }
+        //staticFileLocation("/templates");
+        
         port(findOutPort());
+        
+        if (dao == null) {
+            setDao(new BookDao(db));
+        }
 
-        get("/", (request, response) -> {
+        get("/", (request, response) -> {               //rooth path
             HashMap<String, String> model = new HashMap<>();
             model.put("template", "templates/index.html");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        get("/lukuvinkit", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            List<Book> books = dao.findAll();
+            if (books.isEmpty()) {
+                model.put("info", "Ei vielä lukuvinkkejä");
+            }
+            model.put("books", books);
+            model.put("template", "templates/lukuvinkit.html");
+            model.put("person1", "Mahtijanis");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+        
         get("/index", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             model.put("template", "templates/index.html");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
-        get("/kirja", (request, response) -> {
+        get("/tyyppi", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
-            model.put("template", "templates/lisaa_kirja.html");
+            model.put("template", "templates/typeOfReadingTip.html");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
+
+        post("/tyyppi", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            String typeOfReadingTip = request.queryParams("typeOfReadingTip");
+            if (typeOfReadingTip.equals("book")) {
+                model.put("template", "templates/addNewBook.html");
+                return new ModelAndView(model, layout);
+            } else { // redirection to adding a book until we have more options available
+                model.put("template", "templates/addNewBook.html");
+                return new ModelAndView(model, layout);
+            }
+        }, new VelocityTemplateEngine());
+
+        get("/kirja", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            model.put("template", "templates/addNewBook.html");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+
+        get("/lukuvinkit/poista/:id", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            dao.delete(request.params(":id"));
+            response.redirect("/lukuvinkit");
+
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
 
         post("/kirja", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
-            String kirjanNimi = request.queryParams("kirjan_nimi");
-            String kirjoittaja = request.queryParams("kirjoittaja");
+            String booktitle = request.queryParams("book-title");
+            String writer = request.queryParams("book-author");
+            System.out.println(booktitle);
+            System.out.println(writer);
 
-            if (kirjanNimi.isEmpty() || kirjoittaja.isEmpty()) {
-                model.put("virhe", "Täytäthän kummatkin tiedot!");
-                model.put("template", "templates/lisaa_kirja.html");
+            if (!validateInput(booktitle, 3, 100)) {
+                model.put("virhe", "Kirjan nimen tulee olla 3-100 merkkiä");
+                model.put("template", "templates/addNewBook.html");
+                return new ModelAndView(model, layout);
+            }
+
+            if (writer.length() != 0 && !validateInput(writer, 3, 50)) {
+                model.put("virhe", "Kirjailijan nimen tulee olla 3-50 merkkiä");
+                model.put("template", "templates/addNewBook.html");
                 return new ModelAndView(model, layout);
             }
             
-            // Sinin lisäys
-            ArrayList<Kirja> kirjat = request.session().attribute("kirjat");
-            kirjatTiedostoon = new ArrayList<Kirja>();
-            if (kirjat == null) {
-                kirjat = new ArrayList<Kirja>();
-                request.session().attribute("kirjat", kirjat);
-            }
+            dao.insert(booktitle, writer);
 
-            Kirja k = new Kirja(kirjanNimi, kirjoittaja);
-            kirjat.add(k);
-            kirjatTiedostoon.add(k);
-            kirjoitaTiedostoon(osoite, kirjatTiedostoon);
-            // Sinin lisäys
-
-            model.put("vahvistus", kirjanNimi + " tallennettu!");
-            model.put("template", "templates/lisaa_kirja.html");
-            return new ModelAndView(model, layout);
-
-        }, new VelocityTemplateEngine());
-
-        get("/katsele", (request, response) -> {
-
-            HashMap<String, Object> model = new HashMap<>();
-
-            model.put("kirjat", request.session().attribute("kirjat"));
-            
-            model.put("template", "templates/lukuvinkit.html");
-
+            model.put("vahvistus", booktitle + " tallennettu!");
+            model.put("template", "templates/addNewBook.html");
             return new ModelAndView(model, layout);
 
         }, new VelocityTemplateEngine());
@@ -109,15 +140,19 @@ public class Application {
 
          */
     }
-    
-    public static void kirjoitaTiedostoon(String osoite, List<Kirja> teksti) throws Exception {
-        wr = new PrintWriter(osoite);
-        for (int i = 0; i < teksti.size(); i++) {
-            wr.println(teksti.get(i).toString());
+
+
+    private static boolean validateInput(String input, int minimumLenght, int maximumLength) {
+        if (input.length() < minimumLenght || input.length() > maximumLength) {
+            return false;
         }
-        wr.close();
+        return true;
     }
 
+    public static void setDao(LukuvinkkiDao dao) {
+        Application.dao = dao;
+    }
+       
     static int findOutPort() {
         if (portFromEnv != null) {
             return Integer.parseInt(portFromEnv);
