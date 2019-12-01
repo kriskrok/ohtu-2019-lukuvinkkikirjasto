@@ -29,7 +29,7 @@ public class Stepdefs {
     @Given("lisaa kirja lukuvinkkeihin is selected")
     public void commandAddNewBookSelected() throws Throwable {
         driver.get(baseUrl);
-        WebElement element = driver.findElement(By.linkText("Lisää kirja lukuvinkkeihin"));
+        WebElement element = driver.findElement(By.linkText("Lisää lukuvinkki"));
         element.click();  
     }
 
@@ -81,21 +81,21 @@ public class Stepdefs {
     @Given("katsele lukuvinkkeja is selected")
     public void commandCheckTheReadingTipsIsSelected() throws Throwable {
         driver.get(baseUrl);
-        WebElement element = driver.findElement(By.linkText("Katsele lukuvinkkejä"));
+        WebElement element = driver.findElement(By.linkText("Selaile lukuvinkkejä"));
         element.click();  
     }
 
     @Given("one book with title {string} and writer {string} has already been successfully added")
     public void oneBookSuccessfullyAdded(String bookTitle, String writer) {
         driver.get(baseUrl);
-        WebElement element = driver.findElement(By.linkText("Lisää kirja lukuvinkkeihin"));
+        WebElement element = driver.findElement(By.linkText("Lisää lukuvinkki"));
         element.click();
         element = driver.findElement(By.name("book"));
         element.click();  
         element = driver.findElement(By.name("typeOfReadingTipButton"));
         element.click();
         bookTitleAndWriterAreGiven(bookTitle, writer);
-        element = driver.findElement(By.linkText("Takaisin etusivulle"));
+        element = driver.findElement(By.linkText("Etusivu"));
         element.click();
     }
 
