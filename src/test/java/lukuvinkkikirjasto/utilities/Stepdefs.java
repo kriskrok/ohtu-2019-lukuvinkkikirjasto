@@ -9,11 +9,15 @@ import io.cucumber.java.en.Then;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class Stepdefs {
@@ -95,6 +99,16 @@ public class Stepdefs {
         element.click();
     }
 
+    // Tests for deleting a book
+
+    @Given("valitse poista lukuvinkki is selected") 
+    public void commandCheckDeleteTipIsSelected() throws Throwable {
+        driver.get(baseUrl + "/lukuvinkit");
+        WebElement element = driver.findElement(By.linkText("poista"));
+        element.click();
+
+    }
+
     //helper-methods
 
 
@@ -111,4 +125,5 @@ public class Stepdefs {
         element = driver.findElement(By.name("add-book-button"));
         element.submit(); 
     }
+    
 }

@@ -30,7 +30,9 @@ public class BookDaoForTests implements LukuvinkkiDao {
     }
 
     public void delete(String lukuvinkkiId) {
-
+        Book bk = books.stream().filter(book -> book.id == Integer.parseInt(lukuvinkkiId)).findFirst().orElseGet(null);
+        books.remove(bk);
+        
     }
 
     private int generateId() {
