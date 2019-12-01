@@ -11,7 +11,6 @@ import lukuvinkkikirjasto.domain.*;
 
 public interface LukuvinkkiDao {
 
-    Book findByLukuvinkkiId(String lukuvinkkiId);
     List<Book> findAll();
     void insert(String title, String author) throws Exception;
     void delete(String lukuvinkkiId);

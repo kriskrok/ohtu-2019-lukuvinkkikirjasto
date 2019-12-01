@@ -38,7 +38,8 @@ dependencies {
     testCompile 'io.cucumber:cucumber-junit:4.7.4'
     testCompile 'junit:junit:4.12'
     testCompile group: 'org.fluentlenium', name: 'fluentlenium-core', version: fluentleniumVersion
-    testCompile group: 'org.fluentlenium', name: 'fluentlenium-assertj', version: fluentleniumVersion  
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-assertj', version: fluentleniumVersion
+    testCompile 'org.mockito:mockito-core:3.1.0'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version:seleniumVersion
     compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:seleniumVersion
     compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version:seleniumVersion

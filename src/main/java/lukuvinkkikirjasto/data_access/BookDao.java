@@ -18,7 +18,7 @@ public class BookDao implements LukuvinkkiDao {
         checkDatabaseConnection();
     }
 
-    private void checkDatabaseConnection() throws Exception {
+    public void checkDatabaseConnection() throws Exception {
         Connection conn = null;
 
         try {
@@ -29,32 +29,6 @@ public class BookDao implements LukuvinkkiDao {
         }
     }
 
-    public Book findByLukuvinkkiId(String lukuvinkkiId) {
-        Book book = null;
-        try {
-            Connection connection = database.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(FIND_BY_ID);
-            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
-
-            ResultSet rs = stmt.executeQuery();
-            boolean hasOne = rs.next();
-            if (!hasOne) {
-                return null;
-            }
-
-            book.id = rs.getInt("book_id");
-            book.title = rs.getString("title");
-            book.author = rs.getString("author");
-            System.out.println("status: " + rs.getInt("status"));
-
-            stmt.close();
-            rs.close();
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return book;
-    }
 
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
