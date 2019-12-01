@@ -16,7 +16,7 @@ public class BookDaoTest {
 
     @Before
     public void createNewDao() throws Exception {
-        this.dao = new BookDao();
+        this.dao = new BookDao(new Database());
         this.books = new ArrayList<>();
     }
 

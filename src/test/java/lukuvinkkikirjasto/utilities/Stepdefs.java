@@ -104,12 +104,11 @@ public class Stepdefs {
 
     private void bookTitleAndWriterAreGiven(String bookTitle, String writer) {
         pageHasContent("Syötä lukuvinkkikirjan tiedot:");
-        WebElement element = driver.findElement(By.name("kirjan_nimi"));
+        WebElement element = driver.findElement(By.name("book-title"));
         element.sendKeys(bookTitle);
-        element = driver.findElement(By.name("kirjoittaja"));
+        element = driver.findElement(By.name("book-author"));
         element.sendKeys(writer);
-        element = driver.findElement(By.name("lisaa"));
+        element = driver.findElement(By.name("add-book-button"));
         element.submit(); 
     }
-
 }

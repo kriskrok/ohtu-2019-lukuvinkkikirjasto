@@ -5,7 +5,6 @@ import io.cucumber.junit.CucumberOptions;
 import io.cucumber.junit.CucumberOptions.SnippetType;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
-import lukuvinkkikirjasto.data_access.*;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(

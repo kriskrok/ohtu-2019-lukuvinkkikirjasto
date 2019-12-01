@@ -2,22 +2,27 @@ package lukuvinkkikirjasto.domain;
 
 public class Book extends Lukuvinkki {
 
-    private String booktitle;
-    private String writer;
-    private int id;
+    public String title;
+    public String author;
+    public int id;
+    public boolean status;
 
-    public Book(String booktitle, String writer, int id) {
-        this.booktitle = booktitle;
-        this.writer = writer;
+    public Book(String title, String author, int id) {
+        this.title = title;
+        this.author = author;
         this.id = id;
     }
 
+    public Book() {
+
+    }
+
     public String getBooktitle() {
-        return booktitle;
+        return title;
     }
 
     public String getWriter() {
-        return writer;
+        return author;
     }
 
     public int getId() {
@@ -26,9 +31,9 @@ public class Book extends Lukuvinkki {
 
     @Override
     public String toString() {
-        if (writer.equals("")) {
-            return booktitle;
+        if (author.equals("")) {
+            return title;
         } 
-        return booktitle + " - " + writer;
+        return title + " - " + author;
     }
 }

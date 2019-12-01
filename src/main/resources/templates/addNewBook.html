@@ -4,13 +4,17 @@
 
 <form method="POST" action="/kirja">
     <fieldset>
-        Kirjan nimi: <input type="text" name="kirjan_nimi" id="kirjan_nimi" size="15"/>
-        <br/>
-        Kirjoittaja: <input type="text" name="kirjoittaja" id="kirjoittaja" size="15"/>
-        <br/>
-        <input name="lisaa" type="submit" value="Lisää" />
+        <div class="form-group">
+            <label for="book-title">Kirjan nimi</label>
+            <input type="text" id="book-title" name="book-title" placeholder="kirjan nimi">
+        </div>
+        <div class="form-group">
+            <label for="book-author">Kirjoittaja</label>
+            <input type="text" id="book-author" name="book-author" placeholder="kirjailija">
+        </div>
+        <button type="submit" name="add-book-button" class="btn btn-primary">Lisää</button>
     </fieldset>
-    </form>
+</form>
 
 #if( $vahvistus )
 <div id="vahvistus" style="color:limegreen">

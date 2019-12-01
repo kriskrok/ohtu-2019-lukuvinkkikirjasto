@@ -1,13 +1,12 @@
 package lukuvinkkikirjasto.utilities;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
-import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
 
 
 import lukuvinkkikirjasto.domain.*;
@@ -17,17 +16,24 @@ import lukuvinkkikirjasto.data_access.*;
 public class Application {
 
     static String layout = "templates/layout.html";
+    static Database db;
     static LukuvinkkiDao dao;
 
     public static void main(String[] args) throws Exception {
+
+
+        if (db == null) {
+            db = new Database();
+        }
+        //staticFileLocation("/templates");
         
         port(findOutPort());
         
         if (dao == null) {
-            setDao(new BookDao());
+            setDao(new BookDao(db));
         }
 
-        get("/", (request, response) -> {
+        get("/", (request, response) -> {               //rooth path
             HashMap<String, String> model = new HashMap<>();
             model.put("template", "templates/index.html");
             return new ModelAndView(model, layout);
@@ -35,12 +41,13 @@ public class Application {
 
         get("/lukuvinkit", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            List<Book> books = dao.getBooks();
+            List<Book> books = dao.findAll();
             if (books.isEmpty()) {
                 model.put("info", "Ei vielä lukuvinkkejä");
             }
             model.put("books", books);
             model.put("template", "templates/lukuvinkit.html");
+            model.put("person1", "Mahtijanis");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
         
@@ -77,7 +84,7 @@ public class Application {
 
         get("/lukuvinkit/poista/:id", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
-            dao.deleteBook(request.params(":id"));            
+            dao.delete(request.params(":id"));
             response.redirect("/lukuvinkit");
 
             return new ModelAndView(model, layout);
@@ -86,8 +93,10 @@ public class Application {
 
         post("/kirja", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
-            String booktitle = request.queryParams("kirjan_nimi");
-            String writer = request.queryParams("kirjoittaja");
+            String booktitle = request.queryParams("book-title");
+            String writer = request.queryParams("book-author");
+            System.out.println(booktitle);
+            System.out.println(writer);
 
             if (!validateInput(booktitle, 3, 100)) {
                 model.put("virhe", "Kirjan nimen tulee olla 3-100 merkkiä");
@@ -101,7 +110,7 @@ public class Application {
                 return new ModelAndView(model, layout);
             }
             
-            dao.newBook(booktitle, writer);
+            dao.insert(booktitle, writer);
 
             model.put("vahvistus", booktitle + " tallennettu!");
             model.put("template", "templates/addNewBook.html");

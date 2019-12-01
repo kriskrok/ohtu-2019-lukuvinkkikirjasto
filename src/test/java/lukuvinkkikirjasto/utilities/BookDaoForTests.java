@@ -17,15 +17,19 @@ public class BookDaoForTests implements LukuvinkkiDao {
         this.books = new ArrayList<>();
     }
 
-    public List<Book> getBooks() {
+    public List<Book> findAll() {
         return books;
     }
 
-    public void newBook(String name, String writer) {
+    public Book findByLukuvinkkiId(String lukuvinkkiID) {
+        return books.stream().filter(book -> book.id == Integer.parseInt(lukuvinkkiID)).findFirst().orElseGet(null);
+    }
+
+    public void insert(String name, String writer) {
         books.add(new Book(name, writer, generateId()));
     }
 
-    public void deleteBook(String id) {
+    public void delete(String lukuvinkkiId) {
 
     }
 

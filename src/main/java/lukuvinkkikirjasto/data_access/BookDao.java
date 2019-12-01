@@ -1,89 +1,135 @@
 package lukuvinkkikirjasto.data_access;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 import lukuvinkkikirjasto.domain.*;
 
 public class BookDao implements LukuvinkkiDao {
+    private final String DELETE = "DELETE FROM Book WHERE lukuvinkki_id = ?";
+    private final String FIND_BY_ID = "SELECT * FROM Book WHERE lukuvinkki_id = ?";
+    private final String FIND_ALL = "SELECT * FROM Book ORDER BY book_id";
+    private final String INSERT = "INSERT INTO Book (title, author) VALUES (?,?)";
+    private final String UPDATE = "UPDATE Book SET title = ?, author = ?, lukuvinkki_id = ? WHERE id = ?";
 
+    Database database;
 
-    public BookDao() throws Exception {
+    public BookDao(Database db) throws Exception {
+        this.database = db;
         checkDatabaseConnection();
     }
 
     private void checkDatabaseConnection() throws Exception {
-
-        Connection c = null;
+        Connection conn = null;
 
         try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:lukuvinkit.db");
+            conn = database.getConnection();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             //System.exit(0);
         }
-        System.out.println("Opened database successfully");
     }
 
-    public List<Book> getBooks() throws Exception {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:lukuvinkit.db");
-        PreparedStatement st = connection.prepareStatement("SELECT * FROM Book");
-        ResultSet rs = st.executeQuery();
+    public Book findByLukuvinkkiId(String lukuvinkkiId) {
+        Book book = null;
+        try {
+            Connection connection = database.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(FIND_BY_ID);
+            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
 
-        System.out.println("Kirjavinkit:");
+            ResultSet rs = stmt.executeQuery();
+            boolean hasOne = rs.next();
+            if (!hasOne) {
+                return null;
+            }
 
-        List<Book> books = new ArrayList<>();
+            book.id = rs.getInt("book_id");
+            book.title = rs.getString("title");
+            book.author = rs.getString("author");
+            System.out.println("status: " + rs.getInt("status"));
 
-        while (rs.next()) {
-            String name = rs.getString("name");
-            String writer = rs.getString("writer");
-            int id = rs.getInt("lukuvinkki_id");
-
-            System.out.println(name + " - " + writer);
-
-            Book book = new Book(name, writer, id);
-            books.add(book);
+            stmt.close();
+            rs.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return book;
+    }
 
-        st.close();
-        rs.close();
-        connection.close();
+    public List<Book> findAll() {
+        List<Book> books = new ArrayList<>();
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(FIND_ALL);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Book book = new Book();
+                book.id = rs.getInt("book_id");
+                book.title = rs.getString("title");
+                book.author = rs.getString("author");
+
+                books.add(book);
+            }
+            stmt.close();
+            rs.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return books;
     }
 
-    public void newBook(String name, String writer) throws Exception {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:lukuvinkit.db");
+    public void insert(String title, String author) throws Exception {
+        Connection conn = database.getConnection();
 
-        PreparedStatement stmt2 = connection.prepareStatement("INSERT INTO Lukuvinkki (type) VALUES ('book')");
-        stmt2.execute();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Lukuvinkki (name, type) VALUES (?,?)",
+                                  Statement.RETURN_GENERATED_KEYS);
+        stmt.setString(1, title);
+        stmt.setString(2, "book");
 
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Book (lukuvinkki_id, name, writer) VALUES ( (SELECT MAX(id) FROM Lukuvinkki) , ?, ?)");
-        stmt.setString(1, name);
-        stmt.setString(2, writer);
-        stmt.execute();
-
-        connection.close();
-    }
-
-    public void deleteBook(String id) throws Exception {
-        try {
-            Integer.parseInt(id);
-        } catch (Throwable t) {
-            return;
+        if (stmt.executeUpdate() == 0) {
+            throw new SQLException("Creating lukuvinkki failed, no rows affected.");
         }
 
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:lukuvinkit.db");
-        PreparedStatement stmt2 = connection.prepareStatement("DELETE FROM Book WHERE lukuvinkki_id = ?");
-        stmt2.setInt(1, Integer.parseInt(id));
-        stmt2.execute();
-        PreparedStatement stmt = connection.prepareStatement("DELETE FROM Lukuvinkki WHERE id = ?");
-        stmt.setInt(1, Integer.parseInt(id));
+        int lukuvinkkiId;
+
+        try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                lukuvinkkiId = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("Creating lukuvinkki failed, no ID obtained");
+            }
+        }
+
+        stmt.clearParameters();
+        stmt = conn.prepareStatement("INSERT INTO Book (title, author, lukuvinkki_id) VALUES (?,?,?)");
+        stmt.setString(1, title);
+        stmt.setString(2, author);
+        stmt.setInt(3,lukuvinkkiId);
         stmt.execute();
 
-        connection.close();
+        stmt.close();
+        conn.close();
+    }
+
+    public void delete(String lukuvinkkiId) {
+        try {
+            Connection conn = database.getConnection();
+
+            PreparedStatement stmt = conn.prepareStatement(DELETE);
+            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
+            stmt.executeUpdate();
+            stmt.close();
+
+            stmt = conn.prepareStatement("DELETE FROM Lukuvinkki WHERE id = ?");
+            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
+            stmt.executeUpdate();
+
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

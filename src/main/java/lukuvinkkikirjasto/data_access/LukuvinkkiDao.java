@@ -11,7 +11,8 @@ import lukuvinkkikirjasto.domain.*;
 
 public interface LukuvinkkiDao {
 
-    List<Book> getBooks() throws Exception;
-    void newBook(String name, String writer) throws Exception;
-    void deleteBook(String lukuvinkki_id) throws Exception; 
+    Book findByLukuvinkkiId(String lukuvinkkiId);
+    List<Book> findAll();
+    void insert(String title, String author) throws Exception;
+    void delete(String lukuvinkkiId);
 }

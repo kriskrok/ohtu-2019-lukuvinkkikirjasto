@@ -1,11 +1,15 @@
-
 <h1>Valitse syötettävän vinkin tyyppi:</h1>
 
 <form method="POST" action="/tyyppi">
-    <select name="typeOfReadingTip">
-      <option name="book" value="book">Kirja</option>      
-    </select>
-    <input name="typeOfReadingTipButton" type="submit" value="Valitse tyyppi" />
+    <div class="form-group">
+        <label for="typeOfReadingTip">Lukuvinkin tyyppi</label>
+        <select class="form-control" id="typeOfReadingTip" name="typeOfReadingTip">
+            <option name="book" value="book">Kirja</option>
+        </select>
+    </div>
+    <div>
+        <button type="submit" name="typeOfReadingTipButton" class="btn btn-primary">Valitse tyyppi</button>
+    </div>
 </form>
 
 <p><a href="index">Takaisin etusivulle</a> </p>
