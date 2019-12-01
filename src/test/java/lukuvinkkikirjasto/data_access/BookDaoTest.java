@@ -134,6 +134,32 @@ public class BookDaoTest {
         dao.checkDatabaseConnection();
         verify(mockDB, times(1)).getConnection();
     }
+
+    @Test
+    public void insertAddsLukuvinkkiToDatabase()throws Exception{
+        dao.insert("Kirjoista", "Kirjailija");
+        Book book = new Book();
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Book WHERE author = ?");
+            stmt.setString(1, "Kirjailija");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                book.id = rs.getInt("book_id");
+                book.title = rs.getString("title");
+                book.author = rs.getString("author");
+            }
+            stmt.close();
+            rs.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        assertTrue(book!=null);
+        testiId=book.getId();
+        removeTestLukuvinkki();
+    }
 }
 
 /*  @Test
