@@ -22,9 +22,14 @@
 
 ### Ohjelman asennus- ja käyttöohje
 
-Vaatii toimiakseen seuraavat loitsut:
-- projektin juuressa ./gradlew run
-- selaimen osoiteriviin http://localhost:4567
+Mikäli projektin lähdekoodi löytyy omalta koneelta, sovellus vaatii toimiakseen seuraavat loitsut:
+- projektin juuressa:
+<pre><code> ./gradlew run </code></pre>
+- selaimen osoiteriviin: http://localhost:4567
+
+Vaihtoehtoisesti 1. releasin yhteydessä olevan jar-tiedoston voi ladata, ja sen jälkeen ajaa komennolla:
+
+<pre><code> java -jar lukuvinkkikirjasto.jar</code></pre>
 
 
 ### Definition of Done - User Story
