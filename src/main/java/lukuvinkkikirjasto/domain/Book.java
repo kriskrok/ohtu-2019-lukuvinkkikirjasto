@@ -4,8 +4,10 @@ public class Book extends Lukuvinkki {
 
     public String title;
     public String author;
-    public int id;
+    public String isbn;
+    public String description;
     public boolean status;
+    public int id;
 
     public Book(String title, String author, int id) {
         this.title = title;

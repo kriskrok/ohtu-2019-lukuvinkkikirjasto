@@ -23,15 +23,13 @@
 ### Ohjelman asennus- ja käyttöohje
 
 Mikäli projektin lähdekoodi löytyy omalta koneelta, sovellus vaatii toimiakseen seuraavat loitsut:
-- projektin juuressa:
-<pre><code> ./gradlew run </code></pre>
-- selaimen osoiteriviin: http://localhost:4567
+
+- projektin juuressa: ```./gradlew run```
+- selaimen osoiteriviin: [localhost:4567](http://localhost:4567)
 
 Vaihtoehtoisesti 1. releasin yhteydessä olevan jar-tiedoston voi ladata, ja sen jälkeen ajaa komennolla:
 
 <pre><code> java -jar lukuvinkkikirjasto.jar</code></pre>
-
-Huom. Sovelluksen käynnistyessä komentoriville voi tulostua varoitus <italics> *"Failed to load class "org.slf4j.impl.StaticLoggerBinder"*. Tämä ei kuitenkaan vaikuta sovelluksen toimintaan normaalissa käytössä ja sen voi jättää huomiotta.
 
 ### Definition of Done - User Story
 
