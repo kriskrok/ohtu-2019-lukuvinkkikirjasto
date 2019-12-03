@@ -31,6 +31,7 @@ Vaihtoehtoisesti 1. releasin yhteydessä olevan jar-tiedoston voi ladata, ja sen
 
 <pre><code> java -jar lukuvinkkikirjasto.jar</code></pre>
 
+Huom. Sovelluksen käynnistyessä komentoriville voi tulostua varoitus <italics> *"Failed to load class "org.slf4j.impl.StaticLoggerBinder"*. Tämä ei kuitenkaan vaikuta sovelluksen toimintaan normaalissa käytössä ja sen voi jättää huomiotta.
 
 ### Definition of Done - User Story
 
