@@ -7,11 +7,8 @@ import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.velocity.VelocityTemplateEngine;
 
-
-
 import lukuvinkkikirjasto.domain.*;
 import lukuvinkkikirjasto.data_access.*;
-
 
 public class Application {
 
@@ -21,13 +18,13 @@ public class Application {
 
     public static void main(String[] args) throws Exception {
 
+        staticFileLocation("/public");
+        port(findOutPort());
+
 
         if (db == null) {
             db = new Database();
         }
-        //staticFileLocation("/templates");
-        
-        port(findOutPort());
         
         if (dao == null) {
             setDao(new BookDao(db));
@@ -90,7 +87,6 @@ public class Application {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
-
         post("/kirja", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             String booktitle = request.queryParams("book-title");
@@ -141,7 +137,6 @@ public class Application {
          */
     }
 
-
     private static boolean validateInput(String input, int minimumLenght, int maximumLength) {
         if (input.length() < minimumLenght || input.length() > maximumLength) {
             return false;
@@ -161,7 +156,6 @@ public class Application {
         return 4567;
     }
 
-    //TODO: Googleta ProcessBuilder();
     static String portFromEnv = new ProcessBuilder().environment().get("PORT");
 
     static void setEnvPort(String port) {
