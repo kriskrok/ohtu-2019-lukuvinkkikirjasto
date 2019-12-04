@@ -2,9 +2,12 @@ package lukuvinkkikirjasto.data_access;
 
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lukuvinkkikirjasto.domain.*;
 
 public class BookDao implements LukuvinkkiDao {
+
     private final String DELETE = "DELETE FROM Book WHERE lukuvinkki_id = ?";
     private final String FIND_BY_ID = "SELECT * FROM Book WHERE lukuvinkki_id = ?";
     private final String FIND_ALL = "SELECT * FROM Book ORDER BY book_id";
@@ -28,7 +31,6 @@ public class BookDao implements LukuvinkkiDao {
             //System.exit(0);
         }
     }
-
 
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
@@ -58,7 +60,7 @@ public class BookDao implements LukuvinkkiDao {
         Connection conn = database.getConnection();
 
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Lukuvinkki (name, type) VALUES (?,?)",
-                                  Statement.RETURN_GENERATED_KEYS);
+                Statement.RETURN_GENERATED_KEYS);
         stmt.setString(1, title);
         stmt.setString(2, "book");
 
@@ -80,7 +82,7 @@ public class BookDao implements LukuvinkkiDao {
         stmt = conn.prepareStatement("INSERT INTO Book (title, author, lukuvinkki_id) VALUES (?,?,?)");
         stmt.setString(1, title);
         stmt.setString(2, author);
-        stmt.setInt(3,lukuvinkkiId);
+        stmt.setInt(3, lukuvinkkiId);
         stmt.execute();
 
         stmt.close();
@@ -105,5 +107,23 @@ public class BookDao implements LukuvinkkiDao {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public void update(String lukuvinkkiId) {
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = database.getConnection();
+            stmt = conn.prepareStatement("SELECT Book WHERE id = ?");
+            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
     }
 }

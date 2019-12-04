@@ -1,0 +1,39 @@
+<h1>Muokkaa podcastia</h1>
+
+<p>Syötä podcastin tiedot:</p>
+
+<form method="POST" action="/podcast">
+    <fieldset>
+        <div class="form-group">
+            <label for="episodeTitle">Podcastinnimi</label>
+            <input type="text" id="episode-title" name="episode-title" placeholder="jakson nimi">
+        </div>
+        <div class="form-group">
+            <label for="podcast-creator">Tekija</label>
+            <input type="text" id="podcast-creator" name="podcast-creator" placeholder="tekijä">
+        </div>
+        <div class="form-group">
+            <label for="podcast-series">sarja</label>
+            <input type="text" id="podcast-series" name="podcast-series" placeholder="sarja">
+        </div>
+        <div>
+            <label for="podcast-description">Kuvaus</label>
+            <textarea id="podcast-description" name = "podcast-description" placeholder="kuvaus"></textarea>
+        </div>
+        <div>
+            <label for="podcast-comment">Kommentti</label>
+            <textarea id="podcast-comment" name = "podcast-comment" placeholder="kommentti"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="podcast-url">Url</label>
+            <input type="url" id="podcast-url" name="podcast-url" placeholder="url">
+        </div>
+
+        <div>
+            <label for="podcast-date">Kuunneltu</label>
+            <input type="text" id="podcast-date" name = "podcast-date" class="textbox-n" placeholder="päivämäärä" onfocus ="(this.type = 'date')" onblur="(this.type = 'text')">
+        </div>
+        <button type="submit" name="add-book-button" class="btn btn-primary">Lisää</button>
+        <button type="submit" name="add-book-button" class="btn btn-primary">Peruuta</button>
+    </fieldset>
+</form>

@@ -1,6 +1,6 @@
-<h1>Lisää kirja lukuvinkkeihin</h1>
+<h1>Muokkaa kirjaa</h1>
 
-<p>Syötä lukuvinkkikirjan tiedot:</p>
+<p>Syötä uudet tiedot:</p>
 
 <form method="POST" action="/kirja">
     <fieldset>
@@ -17,31 +17,18 @@
             <input type="url" id="book-url" name="book-url" placeholder="url">
         </div>
         <div>
-        <label for="book-description">Kuvaus</label>
-        <textarea id="book-description" name = "book-description" placeholder="kuvaus"></textarea>
+            <label for="book-description">Kuvaus</label>
+            <textarea id="book-description" name = "book-description" placeholder="kuvaus"></textarea>
         </div>
         <div>
-        <label for="book-comment">Kommentti</label>
-        <textarea id="book-comment" name = "book-comment" placeholder="kommentti"></textarea>
+            <label for="book-comment">Kommentti</label>
+            <textarea id="book-comment" name = "book-comment" placeholder="kommentti"></textarea>
         </div>
         <div>
-        <label for="book-date">Luettu</label>
-        <input type="text" id="book-date" name = "book-date" class="textbox-n" placeholder="päivämäärä" onfocus ="(this.type='date')" onblur="(this.type='text')">
+            <label for="book-date">Luettu</label>
+            <input type="text" id="book-date" name = "book-date" class="textbox-n" placeholder="päivämäärä" onfocus ="(this.type = 'date')" onblur="(this.type = 'text')">
         </div>
         <button type="submit" name="add-book-button" class="btn btn-primary">Lisää</button>
+        <button type="submit" name="add-book-button" class="btn btn-primary">Peruuta</button>
     </fieldset>
 </form>
-
-#if( $vahvistus )
-<div id="vahvistus" style="color:limegreen">
-    <p><em>$vahvistus</em></p>
-</div>
-#end
-
-#if( $virhe )
-<div id="virhe" style="color:red">
-    <p><em>$virhe</em></p>
-</div>
-#end
-
-

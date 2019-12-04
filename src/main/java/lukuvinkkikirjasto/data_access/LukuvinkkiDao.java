@@ -14,4 +14,5 @@ public interface LukuvinkkiDao {
     List<Book> findAll();
     void insert(String title, String author) throws Exception;
     void delete(String lukuvinkkiId);
+    void update(String lukuvinkkiId);
 }

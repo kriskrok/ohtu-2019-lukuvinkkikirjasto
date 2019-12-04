@@ -3,9 +3,11 @@
 #if ($books)
  <ul>
    #foreach ($book in $books)
-   #set($url = "/lukuvinkit/poista/$book.getId()")
+   #set($url1 = "/lukuvinkit/poista/$book.getId()")
+   #set($url2 = "/lukuvinkit/paivita/$book.getId()")
    <li>$book.toString()
-     <button type="button" class="btn btn-outline-danger" onclick="deleteConfirmation()"><a href=$url>poista</a></button>
+     <button type="button" class="btn btn-outline-danger" onclick="deleteConfirmation()"><a href=$url1>poista</a></button>
+     <button type="button" class="btn btn-outline-info" ><a href=$url2>update</a></button>
    </li>
    #end
  </ul>
@@ -15,9 +17,9 @@
 <script>
   function deleteConfirmation() {
     alert("Haluatko varmasti poistaa vinkin?")
+
   }
 </script>
-
 
 #if( $info )
 <div id="info">

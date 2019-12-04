@@ -1,5 +1,6 @@
 package lukuvinkkikirjasto.utilities;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,13 +67,19 @@ public class Application {
         post("/tyyppi", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             String typeOfReadingTip = request.queryParams("typeOfReadingTip");
+            
             if (typeOfReadingTip.equals("book")) {
                 model.put("template", "templates/addNewBook.html");
                 return new ModelAndView(model, layout);
-            } else { // redirection to adding a book until we have more options available
-                model.put("template", "templates/addNewBook.html");
+                
+            }  else if(typeOfReadingTip.equals("podcast")) {
+                model.put("template", "templates/addNewPodcast.html");
+                return new ModelAndView(model, layout);
+            } else {
+                model.put("template", "templates/typeOfReadingTip.html");
                 return new ModelAndView(model, layout);
             }
+            
         }, new VelocityTemplateEngine());
 
         get("/kirja", (request, response) -> {
@@ -86,7 +93,6 @@ public class Application {
             HashMap<String, String> model = new HashMap<>();
             dao.delete(request.params(":id"));
             response.redirect("/lukuvinkit");
-
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -95,6 +101,10 @@ public class Application {
             HashMap<String, String> model = new HashMap<>();
             String booktitle = request.queryParams("book-title");
             String writer = request.queryParams("book-author");
+            String descr = request.queryParams("book-description");
+            String comment = request.queryParams("book-comment");
+            String url = request.queryParams("book-url");
+            String read = request.queryParams("book-date");
             System.out.println(booktitle);
             System.out.println(writer);
 
@@ -110,6 +120,17 @@ public class Application {
                 return new ModelAndView(model, layout);
             }
             
+            if(!validateInput(descr, 0, 255)) {
+                model.put("virhe", "Kuvauksen on oltava alle 255 merkkiä");
+                model.put("template", "templates/addNewBook");
+            }
+            
+            if(!validateInput(comment, 0, 255)) {
+                model.put("virhe", "Kommentin on oltava alle 255 merkkiä");
+                model.put("template", "templates/addNewBook");
+            }
+            
+            
             dao.insert(booktitle, writer);
 
             model.put("vahvistus", booktitle + " tallennettu!");
@@ -118,6 +139,43 @@ public class Application {
 
         }, new VelocityTemplateEngine());
 
+        get("lukuvinkit/paivita/:id", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            model.put("template", "templates/updateBook.html");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+    
+        // podcast
+        get("/podcast", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            model.put("template", "templates/addNewPodcast.html");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        post("/podcast", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            String podcasttitle = request.queryParams("podcast-title");
+            String creator = request.queryParams("podcast-author");
+            
+            if (!validateInput(podcasttitle, 3, 100)) {
+                model.put("virhe", "Podcastin nimen tulee olla 3-100 merkkiä");
+                model.put("template", "templates/addNewPodcast.html");
+                return new ModelAndView(model, layout);
+            }
+
+            if (creator.length() != 0 && !validateInput(creator, 3, 50)) {
+                model.put("virhe", "Tekijän nimen tulee olla 3-50 merkkiä");
+                model.put("template", "templates/addNewPodcast.html");
+                return new ModelAndView(model, layout);
+            }
+            
+          //  dao.insert(podcasttitle, creator);
+
+            model.put("vahvistus", podcasttitle + " tallennettu!");
+            model.put("template", "templates/addNewBook.html");
+            return new ModelAndView(model, layout);
+
+        }, new VelocityTemplateEngine());
 
         /* Esimerkki post-kutsun käsittelystä. Pidetään toistaiseksi menossa mukana.
         post("/user", (request, response) -> {
@@ -139,8 +197,8 @@ public class Application {
         }, new VelocityTemplateEngine());
 
          */
+    
     }
-
 
     private static boolean validateInput(String input, int minimumLenght, int maximumLength) {
         if (input.length() < minimumLenght || input.length() > maximumLength) {
