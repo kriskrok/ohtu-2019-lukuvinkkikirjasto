@@ -3,7 +3,7 @@ package lukuvinkkikirjasto.domain;
 public class Podcast extends Lukuvinkki {
 
     public String creator;
-    public String episodeTitle;
+    public String episode_title;
     public String description;
     public String series;
     public String url;
@@ -16,7 +16,7 @@ public class Podcast extends Lukuvinkki {
     public Podcast(String creator, String episodeTitle, String url) {
         //empty constructor, dependency injections are the way forward
         this.creator = creator;
-        this.episodeTitle = episodeTitle;
+        this.episode_title = episodeTitle;
         this.url = url;
    
     }
@@ -33,8 +33,8 @@ public class Podcast extends Lukuvinkki {
         return description;
     }
 
-    public String getEpisodeTitle() {
-        return episodeTitle;
+    public String getEpisode_Title() {
+        return episode_title;
     }
 
     public String getSeries() {
@@ -48,9 +48,9 @@ public class Podcast extends Lukuvinkki {
     @Override
     public String toString() {
         if(creator == null) {
-            return episodeTitle + " - " + url;
+            return episode_title + " - " + url;
         }
-        return creator + " - " + episodeTitle + " - " + url;
+        return creator + " - " + episode_title + " - " + url;
     }
     
 

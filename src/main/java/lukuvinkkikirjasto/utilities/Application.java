@@ -99,12 +99,14 @@ public class Application {
 
         post("/kirja", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
+            
             String booktitle = request.queryParams("book-title");
             String writer = request.queryParams("book-author");
             String descr = request.queryParams("book-description");
             String comment = request.queryParams("book-comment");
             String url = request.queryParams("book-url");
             String read = request.queryParams("book-date");
+            
             System.out.println(booktitle);
             System.out.println(writer);
 
@@ -129,7 +131,6 @@ public class Application {
                 model.put("virhe", "Kommentin on oltava alle 255 merkkiä");
                 model.put("template", "templates/addNewBook");
             }
-            
             
             dao.insert(booktitle, writer);
 
