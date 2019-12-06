@@ -4,19 +4,37 @@
 
 <form method="POST" action="/podcast">
     <fieldset>
-        <div class="form-group">
-            <label for="podcast-title">nimi</label>
-            <input type="text" id="podcast-title" name="podcast-title" placeholder="podcastin nimi">
+        <div class="form-group row">
+            <label for="podcast-title" class="col-sm-4 col-form-label col-form-label-sm">Podcastin nimi</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control form-control-sm" id="podcast-title" name="podcast-title" placeholder="Podcastin nimi">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="podcast-author">Tekija</label>
-            <input type="text" id="podcast-author" name="podcast-author" placeholder="tekija">
+        <div class="form-group row">
+            <label for="podcast-series" class="col-sm-4 col-form-label col-form-label-sm">Sarja</label>
+            <div class="col-sm-10">
+               <input type="text" class="form-control form-control-sm" id="podcast-series" name="podcast-series" placeholder="Sarja">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="podcast-url">url</label>
-            <input type="text" id="podcast-url" name="podcast-url" placeholder="url">
+        <div class="form-group row">
+            <label for="podcast-creator" class="col-sm-4 col-form-label col-form-label-sm">Tekijä</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control form-control-sm" id="podcast-creator" name="podcast-creator" placeholder="Tekjä">
+            </div>
         </div>
-        <button type="submit" name="add-book-button" class="btn btn-primary">Lisää</button>
+        <div class="form-group row">
+            <label for="podcast-url" class="col-sm-4 col-form-label col-form-label-sm">URL</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control form-control-sm" id="podcast-url" name="podcast-url" placeholder="URL">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="podcast-description" class="col-sm-4 col-form-label col-form-label-sm">Kuvaus</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" name="podcast-description" id="podcast-description" rows="3" placeholder="kuvaus"></textarea>
+            </div>
+        </div>
+        <button type="submit" name="add-podcast-button" class="btn btn-primary">Lisää</button>
     </fieldset>
 </form>
 

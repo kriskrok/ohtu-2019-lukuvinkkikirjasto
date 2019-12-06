@@ -44,8 +44,12 @@ public class BookDao implements LukuvinkkiDao {
                 book.id = rs.getInt("book_id");
                 book.title = rs.getString("title");
                 book.author = rs.getString("author");
-
+                //temporary fields for testing the front-end
+                book.url = "http://www.htmlOnIhanaa.fi";
+                book.description = "Mitä jää sille, joka ei läpäise tiraa, mutta jonka tira läpäisee?";
+                book.comment = "Tiratiratira tiratiratira tiratiratira tiratiratira tiratirati ratiratirati ratirati rati ra";
                 books.add(book);
+                
             }
             stmt.close();
             rs.close();
@@ -53,6 +57,7 @@ public class BookDao implements LukuvinkkiDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        Collections.sort(books);
         return books;
     }
 
@@ -115,15 +120,13 @@ public class BookDao implements LukuvinkkiDao {
         PreparedStatement stmt = null;
         try {
             conn = database.getConnection();
-            stmt = conn.prepareStatement("SELECT Book WHERE id = ?");
+            stmt = conn.prepareStatement("SELECT FROM Book WHERE lukuvinkki_id = ?");
             stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
         } catch (SQLException ex) {
             Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
 
     }
 }

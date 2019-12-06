@@ -25,8 +25,8 @@ public class BookDaoForTests implements LukuvinkkiDao {
         return books.stream().filter(book -> book.id == Integer.parseInt(lukuvinkkiID)).findFirst().orElseGet(null);
     }
 
-    public void insert(String name, String writer) {
-        books.add(new Book(name, writer, generateId()));
+    public void insert(String name, String author) {
+        books.add(new Book(name, author, generateId()));
     }
 
     public void delete(String lukuvinkkiId) {

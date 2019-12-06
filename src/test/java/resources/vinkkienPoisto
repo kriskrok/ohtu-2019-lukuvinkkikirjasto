@@ -1,0 +1,7 @@
+Feature: User can delete the reading tips they have added
+
+  Scenario: user can select to delete a reading tip
+    Given katsele lukuvinkkeja is selected
+    And valitse poista lukuvinkki is selected
+    Then the page does not have content "Kalevala"
+

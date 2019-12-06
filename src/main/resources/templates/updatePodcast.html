@@ -2,38 +2,50 @@
 
 <p>Syötä podcastin tiedot:</p>
 
-<form method="POST" action="/podcast">
+<form method="POST" action="/lukuvinkit/muokkaapodcastia/:id">
     <fieldset>
-        <div class="form-group">
-            <label for="episodeTitle">Podcastinnimi</label>
-            <input type="text" id="episode-title" name="episode-title" placeholder="jakson nimi">
+        <div class="form-group row">
+            <label for="podcast-title" class="col-sm-4 col-form-label col-form-label-sm">Podcastin nimi</label>
+            <div class="col-sm-10">
+                <input value=$PreviousTitle type="text" class="form-control form-control-sm" id="podcast-title" name="podcast-title" placeholder="Podcastin nimi">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="podcast-creator">Tekija</label>
-            <input type="text" id="podcast-creator" name="podcast-creator" placeholder="tekijä">
+        <div class="form-group row">
+            <label for="podcast-series" class="col-sm-4 col-form-label col-form-label-sm">Sarja</label>
+            <div class="col-sm-10">
+               <input value=$PreviousSeries type="text" class="form-control form-control-sm" id="podcast-series" name="podcast-series" placeholder="Sarja">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="podcast-series">sarja</label>
-            <input type="text" id="podcast-series" name="podcast-series" placeholder="sarja">
+        <div class="form-group row">
+            <label for="podcast-creator" class="col-sm-4 col-form-label col-form-label-sm">Tekijä</label>
+            <div class="col-sm-10">
+                <input value=$PreviousCreator type="text" class="form-control form-control-sm" id="podcast-creator" name="podcast-creator" placeholder="Tekjä">
+            </div>
         </div>
-        <div>
-            <label for="podcast-description">Kuvaus</label>
-            <textarea id="podcast-description" name = "podcast-description" placeholder="kuvaus"></textarea>
+        <div class="form-group row">
+            <label for="podcast-url" class="col-sm-4 col-form-label col-form-label-sm">URL</label>
+            <div class="col-sm-10">
+                <input value=$PreviousUrl type="text" class="form-control form-control-sm" id="podcast-url" name="podcast-url" placeholder="URL">
+            </div>
         </div>
-        <div>
-            <label for="podcast-comment">Kommentti</label>
-            <textarea id="podcast-comment" name = "podcast-comment" placeholder="kommentti"></textarea>
+        <div class="form-group row">
+            <label for="podcast-description" class="col-sm-4 col-form-label col-form-label-sm">Kuvaus</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" name="podcast-description" id="podcast-description" rows="3" placeholder="kuvaus"></textarea>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="podcast-url">Url</label>
-            <input type="url" id="podcast-url" name="podcast-url" placeholder="url">
-        </div>
-
-        <div>
-            <label for="podcast-date">Kuunneltu</label>
-            <input type="text" id="podcast-date" name = "podcast-date" class="textbox-n" placeholder="päivämäärä" onfocus ="(this.type = 'date')" onblur="(this.type = 'text')">
-        </div>
-        <button type="submit" name="add-book-button" class="btn btn-primary">Lisää</button>
-        <button type="submit" name="add-book-button" class="btn btn-primary">Peruuta</button>
+        <button type="submit" name="add-podcast-button" class="btn btn-primary">Muokkaa</button>
     </fieldset>
 </form>
+
+#if( $vahvistus )
+<div id="vahvistus" style="color:limegreen">
+    <p><em>$vahvistus</em></p>
+</div>
+#end
+
+#if( $virhe )
+<div id="virhe" style="color:red">
+    <p><em>$virhe</em></p>
+</div>
+#end

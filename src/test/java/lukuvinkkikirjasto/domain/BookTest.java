@@ -20,8 +20,8 @@ public class BookTest {
     }
 
     @Test
-    public void aValidWriterCanBeSet() {
-        assertEquals(book.getWriter(), "Kalle");
+    public void aValidAuthorCanBeSet() {
+        assertEquals(book.getAuthor(), "Kalle");
     }
 
     @Test

@@ -13,12 +13,13 @@ public class Podcast extends Lukuvinkki {
         
     }
     
-    public Podcast(String creator, String episodeTitle, String url) {
+    public Podcast(String episodeTitle, String series, String creator, String url, String description) {
         //empty constructor, dependency injections are the way forward
-        this.creator = creator;
         this.episode_title = episodeTitle;
+        this.series = series;
+        this.creator = creator;
         this.url = url;
-   
+        this.description = description;
     }
 
     public int getId() {
@@ -29,11 +30,7 @@ public class Podcast extends Lukuvinkki {
         return creator;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getEpisode_Title() {
+    public String getEpisodeTitle() {
         return episode_title;
     }
 
@@ -45,9 +42,13 @@ public class Podcast extends Lukuvinkki {
         return url;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
-        if(creator == null) {
+        if(creator.length() == 0) {
             return episode_title + " - " + url;
         }
         return creator + " - " + episode_title + " - " + url;

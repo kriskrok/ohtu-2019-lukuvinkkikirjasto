@@ -1,25 +1,78 @@
 <h1>Lukuvinkit </h1>
 
 #if ($books)
- <ul>
-   #foreach ($book in $books)
-   #set($url1 = "/lukuvinkit/poista/$book.getId()")
-   #set($url2 = "/lukuvinkit/paivita/$book.getId()")
-   <li>$book.toString()
-     <button type="button" class="btn btn-outline-danger" onclick="deleteConfirmation()"><a href=$url1>poista</a></button>
-     <button type="button" class="btn btn-outline-info" ><a href=$url2>update</a></button>
-   </li>
-   #end
- </ul>
+  <div>
+    <br>
+    <h3>Kirjat</h3>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nimi</th>
+          <th scope="col">Kirjailija</th>
+          <th scope="col">Url</th>
+          <th scope="col">Kuvaus</th>
+          <th scope="col">Kommentti</th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+        </tr>
+      </thead>
+      <tbody>
+          #foreach ($book in $books)
+          #set($url1 = "/lukuvinkit/poista/$book.getId()")
+          #set($url2 = "/lukuvinkit/muokkaakirjaa/$book.getId()")
+        <tr>
+          <th scope="row">$book.getBooktitle()</th>
+          <td>$book.getAuthor()</td>
+          <td>$book.getUrl()</td>
+          <td>$book.getDescription()</td>
+          <td>$book.getComment()</td>
+          <td><button type="button" class="btn btn-outline-danger"><a href=$url1>poista</a></button></td>
+          <td><button type="button" class="btn btn-outline-info" ><a href=$url2>muokkaa</a></button></td>
+        </tr> 
+          #end
+      </tbody>
+    </table>
+  </div>
+#end
+
+#if ($podcasts)
+  <div>
+    <br>
+    <h3>Podcastit</h3>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Otsikko</th>
+          <th scope="col">Sarja</th>
+          <th scope="col">Tekijä</th>
+          <th scope="col">URL</th>
+          <th scope="col">Kuvaus</th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+        </tr>
+      </thead>
+      <tbody>
+          #foreach ($podcast in $podcasts)
+          #set($url1 = "/lukuvinkit/poista/$podcast.getId()")
+          #set($url2 = "/lukuvinkit/muokkaapodcastia/$podcast.getId()")
+        <tr>
+          <th scope="row">$podcast.getEpisodeTitle()</th>
+          <td>$podcast.getSeries()</td>
+          <td>$podcast.getCreator()</td>
+          <td>$podcast.getUrl()</td>
+          <td>$podcast.getDescription()</td>
+          <td><button type="button" class="btn btn-outline-danger"><a href=$url1>poista</a></button></td>
+          <td><button type="button" class="btn btn-outline-info" ><a href=$url2>muokkaa</a></button></td>
+        </tr>
+        #end 
+      </tbody>    
+    </table>
+  </div>
 #end
 
 
-<script>
-  function deleteConfirmation() {
-    alert("Haluatko varmasti poistaa vinkin?")
-
-  }
-</script>
 
 #if( $info )
 <div id="info">
