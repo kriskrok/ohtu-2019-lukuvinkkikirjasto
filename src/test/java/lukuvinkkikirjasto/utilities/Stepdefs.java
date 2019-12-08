@@ -111,16 +111,34 @@ public class Stepdefs {
         element.click();
     }
 
-    // Tests for deleting a book
+    // Tests for deleting a reading tip
 
-    @Given("valitse poista lukuvinkki is selected") 
+    @Given("testbook has been added to reading tips")
+    public void addTestBook(){
+        bookTitleAndAuthorAreGiven("AbCdEfG54321", "....");
+    }
+
+    @Given("poista lukuvinkki is selected")
     public void commandCheckDeleteTipIsSelected() throws Throwable {
-        driver.get(baseUrl + "/lukuvinkit");
-        WebElement element = driver.findElement(By.linkText("poista"));
-        element.click();
+        //driver.get(baseUrl + "/lukuvinkit");
+        //WebElement element = driver.findElement(By.linkText("poista"));
+        //element.click();
+        //driver.findElement(By.xpath("//td[@for='AbCdEfG54321']/following::td[5]")).click();
 
     }
 
+    @Then("the page has content 'Ei vielä lukuvinkkejä'")
+    public void readingtipHasBeenDeleted(){
+        pageDoesNotHaveContent("poista");
+    }
+
+    @When("poista lukuvinkki is selected until no tips remain")
+    public void allReadingTipsAreRemoved(){
+        while(driver.getPageSource().contains("poista")){
+            WebElement element= driver.findElement(By.linkText("poista"));
+            element.click();
+        }
+    }
 
     // Test for adding a new podcast
 
@@ -148,10 +166,37 @@ public class Stepdefs {
     }    
 
     @When("a valid episode title and an invalid series title {string} are given and other fields are empty") 
-    public void anInvalidPodcastSeriesTitleAndNoOtherFieldsAreEntered(String seriesTitle) {
+    public void anInvalidPodcastSeriesTitleAndvalidEpisodeTitleAreEntered(String seriesTitle) {
         podcastDataIsEntered("Podcast-Guru", seriesTitle, "", "");   
-    }  
+    }
 
+    @When("a valid episode title and an invalid creator name {string} are given and other fields are empty")
+    public void aValidEpisodeTitleAndAnInvalidCreatorNameAreEntered(String creator) {
+        podcastDataIsEntered("Podcast-Guru", "", creator, "");
+    }
+
+
+    // tests for editing the tips
+
+    @When("muokkaa is selected")
+    public void editTipHasBeenSelected(){
+        WebElement element=driver.findElement(By.linkText("muokkaa"));
+        element.click();
+    }
+
+    @When("author is edited to ..1..")
+    public void editAuthorNameInEditView(){
+        WebElement element=driver.findElement(By.name("book-author"));
+        element.sendKeys("..1..");
+        element = driver.findElement(By.name("add-book-button"));
+        element.submit();
+    }
+
+    @Then("tip list contains new author name ..1..")
+    public void tipListShowsCorrectEditedAuthorName(){
+        //pageHasContent("..1..");
+        //WAITING FOR WORKING EDIT CONFIRMATION
+    }
 
     //helper-methods
 

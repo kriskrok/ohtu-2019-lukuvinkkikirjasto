@@ -43,6 +43,7 @@ public class Application {
         }, new VelocityTemplateEngine());
 
         // browsing the reading tips
+        // EDIT FOR CASE WHEN NO BOOKS BUT 1+ PODCASTS!
 
         get("/lukuvinkit", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();

@@ -23,3 +23,10 @@ Scenario: user cannot add a podcast with too short series title
     Given option podcast is selected
     When a valid episode title and an invalid series title "ii" are given and other fields are empty 
     Then system will respond with "Sarjan nimen tulee olla 3-100 merkkiä"
+
+
+Scenario: user cannot add a podcast with too short creator name
+    Given lisaa lukuvinkki is selected
+    Given option podcast is selected
+    When a valid episode title and an invalid creator name "me" are given and other fields are empty
+    Then system will respond with "Tekijän nimen tulee olla 3-50 merkkiä"
