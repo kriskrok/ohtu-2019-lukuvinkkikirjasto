@@ -7,6 +7,7 @@ public class Lukuvinkki implements Comparable<Lukuvinkki> {
     public String getTitle() {
         return title;
     }
+    public int getId() { return this.id; }
 
     @Override
     public int compareTo(Lukuvinkki another) {

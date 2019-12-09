@@ -9,6 +9,7 @@ public class Book extends Lukuvinkki {
     public boolean status;
     public String url;
 
+
     public Book(String title, String author, String url, String description, String comment, int id)  {
         this.title = title;
         this.author = author;
@@ -49,6 +50,7 @@ public class Book extends Lukuvinkki {
     public String getIsbn() {
         return isbn;
     }
+
 
     @Override
     public String toString() {
