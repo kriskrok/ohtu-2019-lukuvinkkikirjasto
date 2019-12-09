@@ -2,14 +2,12 @@ package lukuvinkkikirjasto.domain;
 
 public class Book extends Lukuvinkki {
 
-    public String title;
     public String author;
     public String isbn;
     public String description;
     public String comment;
     public boolean status;
     public String url;
-    public int id;
 
     public Book(String title, String author, String url, String description, String comment, int id)  {
         this.title = title;
@@ -20,14 +18,12 @@ public class Book extends Lukuvinkki {
         this.id = id;
     }
     public Book(String title, String author, int id) {
-        this.title = title;
-        this.author = author;
-        this.id = id;
+        this(title, author, "", "", "", id);
     }
 
 
     public Book() {
-
+        this("", "", -1);
     }
 
     public String getBooktitle() {
@@ -53,11 +49,6 @@ public class Book extends Lukuvinkki {
     public String getIsbn() {
         return isbn;
     }
-
-    public int getId() {
-        return id;
-    }
-
 
     @Override
     public String toString() {

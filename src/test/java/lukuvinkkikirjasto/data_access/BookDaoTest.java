@@ -1,12 +1,10 @@
 package lukuvinkkikirjasto.data_access;
 
 import lukuvinkkikirjasto.domain.*;
-import lukuvinkkikirjasto.utilities.*;
-import lukuvinkkikirjasto.data_access.*;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import java.sql.*;
@@ -14,7 +12,7 @@ import java.util.*;
 
 public class BookDaoTest {
 
-    private BookDao dao;
+    private BookDao bookDao;
     private Database database = new Database();
     int testiId;
     private Database mockDB;
@@ -22,7 +20,7 @@ public class BookDaoTest {
 
     @Before
     public void createNewDao() throws Exception {
-        this.dao = new BookDao(database);
+        this.bookDao = new BookDao(database);
     }
 
     public void setTestLukuvinkki() throws Exception {
@@ -80,10 +78,11 @@ public class BookDaoTest {
     @Test
     public void findAllReturnsCorrectBooks() throws Exception{
         setTestLukuvinkki();
-        List<Book> books = dao.findAll();
+
+        List<Lukuvinkki> books = bookDao.findAll();
         boolean found=false;
-        for (Book book:books){
-            if (book.getBooktitle().equals("Kirja testauksesta")){
+        for (Lukuvinkki book:books){
+            if (book.getTitle().equals("Kirja testauksesta")){
                 found= true;
                 break;
             }
@@ -95,7 +94,7 @@ public class BookDaoTest {
     @Test
     public void deleteRemovesRightLukuvinkki() throws Exception{
         setTestLukuvinkki();
-        dao.delete(String.valueOf(testiId));
+        bookDao.delete(String.valueOf(testiId));
         List<Book> books = new ArrayList<>();
         try {
             Connection conn = database.getConnection();
@@ -131,13 +130,13 @@ public class BookDaoTest {
     public void checkDatabaseConnectionCallsDatabase() throws  Exception{
         mockDB = mock(Database.class);
         LukuvinkkiDao testDao  = new BookDao(mockDB);
-        dao.checkDatabaseConnection();
+        bookDao.checkDatabaseConnection();
         verify(mockDB, times(1)).getConnection();
     }
 
     @Test
     public void insertAddsLukuvinkkiToDatabase()throws Exception{
-        dao.insert("Kirjoista", "Kirjailija");
+        bookDao.insert("Kirjoista", "Kirjailija");
         Book book = new Book();
         try {
             Connection conn = database.getConnection();
@@ -157,7 +156,7 @@ public class BookDaoTest {
             System.out.println(e.getMessage());
         }
         assertTrue(book!=null);
-        testiId=book.getId();
+        testiId=book.id;
         removeTestLukuvinkki();
     }
 }

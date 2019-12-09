@@ -1,6 +1,5 @@
 package lukuvinkkikirjasto.utilities;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
@@ -17,7 +16,8 @@ public class Application {
 
     static String layout = "templates/layout.html";
     static Database db;
-    static LukuvinkkiDao dao;
+    static BookDao bookDao;
+    static PodcastDao podcastDao;
 
     public static void main(String[] args) throws Exception {
         
@@ -32,8 +32,12 @@ public class Application {
         
         port(findOutPort());
         
-        if (dao == null) {
-            setDao(new BookDao(db));
+        if (bookDao == null) {
+            bookDao = new BookDao(db);
+        }
+
+        if (podcastDao == null) {
+            podcastDao = new PodcastDao(db);
         }
 
         get("/", (request, response) -> {   //rooth path
@@ -47,7 +51,7 @@ public class Application {
 
         get("/lukuvinkit", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            List<Book> books = dao.findAll();
+            List<Lukuvinkki> books = bookDao.findAll();
             if (books.isEmpty()) {
                 model.put("info", "Ei vielä lukuvinkkejä");
             }
@@ -64,7 +68,7 @@ public class Application {
 
         get("/lukuvinkit/poista/:id", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
-            dao.delete(request.params(":id"));
+            bookDao.delete(request.params(":id"));
             response.redirect("/lukuvinkit");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
@@ -128,7 +132,7 @@ public class Application {
                 return new ModelAndView(model, layout);
             }
             model.put("template", "templates/updateBook.html");
-            dao.update(request.params(":id"));
+            bookDao.update(request.params(":id"));
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -199,7 +203,7 @@ public class Application {
                 return new ModelAndView(model, layout);
             }
             
-            dao.insert(booktitle, author);
+            bookDao.insert(booktitle, author);
             
             model.put("vahvistus", booktitle + " tallennettu!");
             model.put("template", "templates/addNewBook.html");
@@ -258,10 +262,6 @@ public class Application {
             return false;
         }
         return true;
-    }
-
-    public static void setDao(LukuvinkkiDao dao) {
-        Application.dao = dao;
     }
        
     static int findOutPort() {

@@ -40,7 +40,7 @@ public class BDTest {
     
     @Test
     public void daoDeletesBookById() {
-        List<Integer> ids = dao.findAll().stream().map(Book::getId).collect(Collectors.toList());
+        List<Integer> ids = dao.findAll().stream().map(book -> book.id).collect(Collectors.toList());
         int id = ids.get(0);
         dao.delete(String.valueOf(id));
         assertEquals(dao.findAll().size(), 0);
@@ -52,7 +52,7 @@ public class BDTest {
         String name = "name";
         String author = "author";
         dao.insert(name, author);
-        List<Integer> ids = dao.findAll().stream().map(Book::getId).collect(Collectors.toList());
+        List<Integer> ids = dao.findAll().stream().map(book -> book.id).collect(Collectors.toList());
         int id = ids.get(0);
         assertEquals(dao.findByLukuvinkkiId(String.valueOf(id)).toString(), "name - author");
     }

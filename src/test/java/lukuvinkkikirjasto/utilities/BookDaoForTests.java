@@ -8,27 +8,31 @@ import lukuvinkkikirjasto.data_access.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDaoForTests implements LukuvinkkiDao {
+public class BookDaoForTests extends BookDao {
 
     int maxId = 1;
     private List<Book> books;
 
-    public BookDaoForTests() {
+    public BookDaoForTests()  throws Exception {
+        super(null);
         this.books = new ArrayList<>();
     }
 
-    public List<Book> findAll() {
-        return books;
+    @Override
+    public List<Lukuvinkki> findAll() {
+        return new ArrayList<Lukuvinkki>(books);
     }
 
     public Book findByLukuvinkkiId(String lukuvinkkiID) {
         return books.stream().filter(book -> book.id == Integer.parseInt(lukuvinkkiID)).findFirst().orElseGet(null);
     }
 
+    @Override
     public void insert(String name, String author) {
         books.add(new Book(name, author, generateId()));
     }
 
+    @Override
     public void delete(String lukuvinkkiId) {
         Book bk = books.stream().filter(book -> book.id == Integer.parseInt(lukuvinkkiId)).findFirst().orElseGet(null);
         books.remove(bk);
