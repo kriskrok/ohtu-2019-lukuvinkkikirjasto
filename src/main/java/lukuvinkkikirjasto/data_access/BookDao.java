@@ -45,9 +45,9 @@ public class BookDao implements LukuvinkkiDao {
                 book.title = rs.getString("title");
                 book.author = rs.getString("author");
                 //temporary fields for testing the front-end
-                book.url = "http://www.htmlOnIhanaa.fi";
-                book.description = "Mitä jää sille, joka ei läpäise tiraa, mutta jonka tira läpäisee?";
-                book.comment = "Tiratiratira tiratiratira tiratiratira tiratiratira tiratirati ratiratirati ratirati rati ra";
+                book.url = " ";
+                book.description = " ";
+                book.comment = " ";
                 books.add(book);
                 
             }
