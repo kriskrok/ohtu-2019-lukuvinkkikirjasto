@@ -147,6 +147,29 @@ public class BookDao implements LukuvinkkiDao {
         }
     }
 
+    public void update(Book book) {
+        String UPDATE = "UPDATE Book SET title = ?, author = ?, description = ?, comment = ?, url = ? WHERE id = ?";
+
+        try {
+            Connection conn = database.getConnection();
+
+            PreparedStatement stmt = conn.prepareStatement(UPDATE);
+            stmt.setString(1, book.title);
+            stmt.setString(2, book.author);
+            stmt.setString(3, book.description);
+            stmt.setString(4, book.comment);
+            stmt.setString(5, book.url);
+            stmt.setInt(6, book.id);
+            stmt.executeUpdate();
+
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
+
     public void update(String lukuvinkkiId) {
 
         Connection conn = null;

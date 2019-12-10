@@ -86,6 +86,40 @@ public class Application {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        post("lukuvinkit/muokkaakirjaa/:id", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            Book book = bookDao.findById(request.params(":id"));
+
+
+            String booktitle = request.queryParams("book-title");
+            String author = request.queryParams("book-author");
+
+            if (!validateInput(booktitle, 3, 100)) {
+                model.put("virhe", "Kirjan nimen tulee olla 3-100 merkkiä");
+                model.put("template", "templates/updateBook.html");
+                return new ModelAndView(model, layout);
+            }
+            if (author.length() != 0 && !validateInput(author, 3, 50)) {
+                model.put("virhe", "Kirjailijan nimen tulee olla 3-50 merkkiä");
+                model.put("template", "templates/updateBook.html");
+                return new ModelAndView(model, layout);
+            }
+
+            book.title = request.queryParams("book-title");
+            book.author = request.queryParams("book-author");
+            book.description = request.queryParams("book-description");
+            book.comment = request.queryParams("book-comment");
+            book.url = request.queryParams("book-url");
+            String read = request.queryParams("book-date");
+
+            bookDao.update(book);
+            model.put("vahvistus", booktitle + " tallennettu!");
+            model.put("template", "templates/addNewPodcast.html");
+            return new ModelAndView(model, layout);
+
+
+        }, new VelocityTemplateEngine());
+
         get("lukuvinkit/muokkaapodcastia/:id", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             Podcast podcast = podcastDao.findById(request.params(":id"));
@@ -97,6 +131,32 @@ public class Application {
             model.put("PreviousUrl", podcast.url);
             model.put("PreviousSeries", podcast.series);
             model.put("template", "templates/updatePodcast.html");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        post("lukuvinkit/muokkaapodcastia/:id", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            System.out.println(request.params(":id"));
+            Podcast podcast = podcastDao.findById(request.params(":id"));
+
+            String episodeTitle = request.queryParams("podcast-title");
+
+            if (!validateInput(episodeTitle, 3, 100)) {
+                model.put("virhe", "Podcastin nimen tulee olla 3-100 merkkiä");
+                model.put("template", "templates/addNewPodcast.html");
+                return new ModelAndView(model, layout);
+            }
+
+            podcast.title = request.queryParams("podcast-title");
+            podcast.creator = request.queryParams("podcast-creator");
+            podcast.url = request.queryParams("podcast-url");
+            podcast.series = request.queryParams("podcast-series");
+            podcast.description = request.queryParams("podcast-description");
+
+
+            podcastDao.update(podcast);
+            model.put("vahvistus", episodeTitle + " tallennettu!");
+            model.put("template", "templates/addNewPodcast.html");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 

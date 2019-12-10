@@ -11,7 +11,7 @@ public class PodcastDao  implements LukuvinkkiDao {
     private final String FIND_BY_ID = "SELECT * FROM Podcast WHERE lukuvinkki_id = ?";
     private final String FIND_ALL = "SELECT * FROM Podcast ORDER BY podcast_id";
     private final String INSERT = "INSERT INTO Podcast (episode_title, creator, series, description, url, lukuvinkki_id) VALUES (?,?,?,?,?,?)";
-    private final String UPDATE = "UPDATE Book SET title = ?, author = ?, lukuvinkki_id = ? WHERE id = ?";
+    private final String UPDATE = "UPDATE Podcast SET episode_title = ?, creator = ?, series = ?, description = ?, url = ?,  WHERE podcast_id = ?";
 
     Database database;
 
@@ -147,7 +147,29 @@ public class PodcastDao  implements LukuvinkkiDao {
         }
     }
 
-    public void update(String lukuvinkkiId) {
-        //TODO: do me
+    public void update(Podcast pod) {
+
+        try {
+            Connection conn = database.getConnection();
+
+            PreparedStatement stmt = conn.prepareStatement(UPDATE);
+            stmt.setString(1, pod.title);
+            stmt.setString(2, pod.creator);
+            stmt.setString(3, pod.series);
+            stmt.setString(4, pod.description);
+            stmt.setString(5, pod.url);
+            stmt.setInt(6, pod.id);
+            stmt.executeUpdate();
+
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
+
+    public void update (String lukuvinkkiId) {
+        //not yet implemented
     }
 }
