@@ -75,25 +75,27 @@ public class Application {
 
         get("lukuvinkit/muokkaakirjaa/:id", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
-         // Book book = dao.findbyId(id);
-         // model.put("book", book);  
-         // The next lines few lines provide an example of the autofill in works with the updating form. 
-            model.put("PreviousTitle", "Tira-kirja");
-            model.put("PreviousAuthor", "Laaksonen");
-            model.put("PreviousUrl", "www.tirakirjaOnLit.com");
+            Book book = bookDao.findById(request.params(":id"));
+            model.put("PreviousTitle", book.title);
+            model.put("PreviousAuthor", book.author);
+            model.put("PreviousUrl", book.url);
+            model.put("PreviousDescription", book.description);
+            model.put("PreviousComment", book.comment);
             model.put("template", "templates/updateBook.html");
+         // model.put("book", book);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
         get("lukuvinkit/muokkaapodcastia/:id", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
-         // Book book = dao.findbyId(id);
+            Podcast podcast = podcastDao.findById(request.params(":id"));
+
          // model.put("podcast", podcast);  
          // The next lines few lines provide an example of the autofill in works with the updating form. 
-            model.put("PreviousTitle", "Tira-podcast");
-            model.put("PreviousCreator", "Algoritmikuningas");
-            model.put("PreviousUrl", "www.tirautus.com");
-            model.put("PreviousSeries", "Tirailut");
+            model.put("PreviousTitle", podcast.title);
+            model.put("PreviousCreator", podcast.creator);
+            model.put("PreviousUrl", podcast.url);
+            model.put("PreviousSeries", podcast.series);
             model.put("template", "templates/updatePodcast.html");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
