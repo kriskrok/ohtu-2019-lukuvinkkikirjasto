@@ -62,7 +62,6 @@ public class Application {
                 model.put("podcasts", podcasts);
             } 
             model.put("template", "templates/lukuvinkit.html");
-            model.put("person1", "Mahtijanis");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
@@ -247,7 +246,8 @@ public class Application {
             }
             
           //  dao.insert(episodeTitle, series, creator, url, description);
-            podcasts.add(new Podcast(episodeTitle, series, creator, url, description));
+            podcastDao.insert(episodeTitle, series, creator, url, description );
+            //podcasts.add(new Podcast(episodeTitle, series, creator, url, description));
 
             model.put("vahvistus", episodeTitle + " tallennettu!");
             model.put("template", "templates/addNewPodcast.html");

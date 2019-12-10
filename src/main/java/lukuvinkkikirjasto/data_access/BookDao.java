@@ -61,6 +61,39 @@ public class BookDao implements LukuvinkkiDao {
         return books;
     }
 
+    public Book findById(Integer key) {
+        Book book = new Book();
+
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID);
+            stmt.setInt(1, key);
+
+            ResultSet rs = stmt.executeQuery();
+            boolean hasOne = rs.next();
+            if (!hasOne) {
+                return null;
+            }
+
+            book.id = rs.getInt("book_id");
+            book.title = rs.getString("title");
+            book.author = rs.getString("author");
+            book.url = rs.getString("url");
+            book.description = rs.getString("description");
+            book.comment = rs.getString("comment");
+            book.isbn = rs.getString("isbn");
+
+            stmt.close();
+            rs.close();
+            conn.close();
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+
+        return book;
+    }
+
     public void insert(String title, String author) throws Exception {
         Connection conn = database.getConnection();
 

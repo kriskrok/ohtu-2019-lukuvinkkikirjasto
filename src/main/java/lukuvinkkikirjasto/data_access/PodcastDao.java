@@ -80,8 +80,6 @@ public class PodcastDao  implements LukuvinkkiDao {
             }
         }
 
-        // nimi, sarja, tekija, url, kuvaus
-
         stmt.clearParameters();
         stmt = conn.prepareStatement(INSERT);
         stmt.setString(1, title);

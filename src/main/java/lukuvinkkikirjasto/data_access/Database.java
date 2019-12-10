@@ -85,20 +85,21 @@ public class Database {
 
             conn.prepareStatement("DROP TABLE IF EXISTS Book;").executeUpdate();
             conn.prepareStatement("CREATE TABLE Book (book_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "title VARCHAR(255) CHECK(LENGTH(title) >= 3), author VARCHAR(127), description VARCHAR(1023)," +
-                    "comment VARCHAR(1023), url VARCHAR(255), status INTEGER CHECK(status IN (0,1)) DEFAULT '0'," +
-                    "read DATE, isbn VARCHAR(20) CHECK(LENGTH(isbn) <= 20), lukuvinkki_id INTEGER," +
+                    "title VARCHAR(255) CHECK(LENGTH(title) >= 3), author VARCHAR(127)," +
+                    "description VARCHAR(1023) DEFAULT '', comment VARCHAR(1023) DEFAULT ''," +
+                    "url VARCHAR(255) DEFAULT '', status INTEGER CHECK(status IN (0,1)) DEFAULT '0', read DATE," +
+                    "isbn VARCHAR(20) CHECK(LENGTH(isbn) <= 20) DEFAULT '', lukuvinkki_id INTEGER," +
                     "FOREIGN KEY (lukuvinkki_id) REFERENCES Lukuvinkki(id)" +
-                        "ON UPDATE CASCADE ON DELETE CASCADE);").executeUpdate();
+                    "ON UPDATE CASCADE ON DELETE CASCADE);").executeUpdate();
 
             conn.prepareStatement("DROP TABLE IF EXISTS Podcast;").executeUpdate();
             conn.prepareStatement("CREATE TABLE Podcast (podcast_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "episode_title VARCHAR(255) CHECK(LENGTH(episode_title) >= 3), creator VARCHAR(127) ,series VARCHAR(255)," +
-                    "description VARCHAR(1023), comment VARCHAR(1023), url VARCHAR(255)," +
+                    "episode_title VARCHAR(255) CHECK(LENGTH(episode_title) >= 3), creator VARCHAR(127) DEFAULT ''," +
+                    "series VARCHAR(255) DEFAULT '',  description VARCHAR(1023) DEFAULT ''," +
+                    "comment VARCHAR(1023) DEFAULT '', url VARCHAR(255) DEFAULT ''," +
                     "status INTEGER CHECK(status IN (0,1)) DEFAULT '0', read DATE, lukuvinkki_id INTEGER," +
                     "FOREIGN KEY (lukuvinkki_id) REFERENCES Lukuvinkki(id)" +
                         "ON UPDATE CASCADE ON DELETE CASCADE);").executeUpdate();
-
 
             conn.close();
         } catch (Exception e) {
