@@ -8,7 +8,7 @@ import lukuvinkkikirjasto.domain.*;
 
 public class BookDao implements LukuvinkkiDao {
 
-    private final String DELETE = "DELETE FROM Book WHERE lukuvinkki_id = ?";
+    private final String DELETE = "DELETE FROM Book WHERE book_id = ?";
     private final String FIND_BY_ID = "SELECT * FROM Book WHERE lukuvinkki_id = ?";
     private final String FIND_ALL = "SELECT * FROM Book ORDER BY book_id";
     private final String INSERT = "INSERT INTO Book (title, author) VALUES (?,?)";

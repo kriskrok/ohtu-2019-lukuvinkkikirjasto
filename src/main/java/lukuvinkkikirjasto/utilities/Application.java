@@ -73,6 +73,13 @@ public class Application {
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        get("/lukuvinkit/poistaPod/:id", (request, response) -> {
+            HashMap<String, String> model = new HashMap<>();
+            podcastDao.delete(request.params(":id"));
+            response.redirect("/lukuvinkit");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
         get("lukuvinkit/muokkaakirjaa/:id", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             Book book = bookDao.findById(request.params(":id"));

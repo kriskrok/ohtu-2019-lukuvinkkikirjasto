@@ -55,7 +55,7 @@
       </thead>
       <tbody>
           #foreach ($podcast in $podcasts)
-          #set($url1 = "/lukuvinkit/poista/$podcast.getId()")
+          #set($url1 = "/lukuvinkit/poistaPod/$podcast.getId()")
           #set($url2 = "/lukuvinkit/muokkaapodcastia/$podcast.getId()")
         <tr>
           <th scope="row">$podcast.getEpisodeTitle()</th>
