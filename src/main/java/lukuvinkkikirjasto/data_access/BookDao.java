@@ -61,13 +61,13 @@ public class BookDao implements LukuvinkkiDao {
         return books;
     }
 
-    public Book findById(Integer key) {
+    public Book findById(String lukuvinkkiId) {
         Book book = new Book();
 
         try {
             Connection conn = database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID);
-            stmt.setInt(1, key);
+            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
 
             ResultSet rs = stmt.executeQuery();
             boolean hasOne = rs.next();

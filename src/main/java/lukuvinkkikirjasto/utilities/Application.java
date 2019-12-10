@@ -22,7 +22,7 @@ public class Application {
     public static void main(String[] args) throws Exception {
         
         // temporary arraylist for podcasts for testing
-        ArrayList<Podcast> podcasts = new ArrayList<>();
+        //ArrayList<Podcast> podcasts = new ArrayList<>();
 
 
         if (db == null) {
@@ -52,6 +52,7 @@ public class Application {
         get("/lukuvinkit", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             List<Lukuvinkki> books = bookDao.findAll();
+            List<Lukuvinkki> podcasts = podcastDao.findAll();
             if (books.isEmpty() && podcasts.isEmpty()) {
                 model.put("info", "Ei vielä lukuvinkkejä");
             }

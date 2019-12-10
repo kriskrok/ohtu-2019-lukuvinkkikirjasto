@@ -6,7 +6,6 @@ public class Book extends Lukuvinkki {
     public String isbn;
     public String description;
     public String comment;
-    //public boolean status;
     public String url;
 
 

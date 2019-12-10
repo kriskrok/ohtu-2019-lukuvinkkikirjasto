@@ -8,7 +8,7 @@ import lukuvinkkikirjasto.domain.*;
 
 public class PodcastDao  implements LukuvinkkiDao {
     private final String DELETE = "DELETE FROM Podcast WHERE lukuvinkki_id = ?";
-    private final String FIND_BY_ID = "SELECT * FROM Book WHERE lukuvinkki_id = ?";
+    private final String FIND_BY_ID = "SELECT * FROM Podcast WHERE lukuvinkki_id = ?";
     private final String FIND_ALL = "SELECT * FROM Podcast ORDER BY podcast_id";
     private final String INSERT = "INSERT INTO Podcast (episode_title, creator, series, description, url, lukuvinkki_id) VALUES (?,?,?,?,?,?)";
     private final String UPDATE = "UPDATE Book SET title = ?, author = ?, lukuvinkki_id = ? WHERE id = ?";
@@ -56,6 +56,39 @@ public class PodcastDao  implements LukuvinkkiDao {
         }
         Collections.sort(podcasts);
         return podcasts;
+    }
+
+    public Podcast findById(String lukuvinkkiId) {
+        Podcast podcast = new Podcast();
+
+        try {
+            Connection conn = database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID);
+            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
+
+            ResultSet rs = stmt.executeQuery();
+            boolean hasOne = rs.next();
+            if (!hasOne) {
+                return null;
+            }
+
+            podcast = new Podcast();
+            podcast.id = rs.getInt("podcast_id");
+            podcast.creator = rs.getString("creator");
+            podcast.title = rs.getString("episode_title");
+            podcast.description = rs.getString("description");
+            podcast.series = rs.getString("series");
+            podcast.url = rs.getString("url");
+
+            stmt.close();
+            rs.close();
+            conn.close();
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+
+        return podcast;
     }
 
     public void insert(String title, String series, String creator, String url, String description) throws Exception {
