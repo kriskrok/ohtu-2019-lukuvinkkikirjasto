@@ -27,7 +27,7 @@ Mikäli projektin lähdekoodi löytyy omalta koneelta, sovellus vaatii toimiakse
 - projektin juuressa: ```./gradlew run```
 - selaimen osoiteriviin: [localhost:4567](http://localhost:4567)
 
-Vaihtoehtoisesti 1. releasin yhteydessä olevan jar-tiedoston voi ladata, ja sen jälkeen ajaa komennolla:
+Vaihtoehtoisesti 1. releasin yhteydessä olevan jar-tiedoston voi ladata ja sen jälkeen ajaa komennolla:
 
 <pre><code> java -jar lukuvinkkikirjasto.jar</code></pre>
 
