@@ -1,6 +1,4 @@
-## Tietokantaskeema
 
-![tietokantaskeema](http://yuml.me/0ab356e6.jpg "Tietokantaskeema")
 
 
 
