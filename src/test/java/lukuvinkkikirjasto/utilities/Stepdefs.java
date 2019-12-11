@@ -127,9 +127,9 @@ public class Stepdefs {
 
     }
 
-    @Then("the page has content 'Ei vielä lukuvinkkejä'")
-    public void readingtipHasBeenDeleted(){
-        pageDoesNotHaveContent("poista");
+    @Then("the page has content {string}")
+    public void pageHasExpectedContent(String content){
+        pageHasContent(content);
     }
 
     @When("poista lukuvinkki is selected until no tips remain")
@@ -167,7 +167,7 @@ public class Stepdefs {
 
     @When("a valid episode title and an invalid series title {string} are given and other fields are empty") 
     public void anInvalidPodcastSeriesTitleAndvalidEpisodeTitleAreEntered(String seriesTitle) {
-        podcastDataIsEntered("Podcast-Guru", seriesTitle, "", "");   
+        podcastDataIsEntered("Podcast-Guru", seriesTitle, "", "");
     }
 
     @When("a valid episode title and an invalid creator name {string} are given and other fields are empty")
@@ -176,27 +176,7 @@ public class Stepdefs {
     }
 
 
-    // tests for editing the tips
 
-    @When("muokkaa is selected")
-    public void editTipHasBeenSelected(){
-        WebElement element=driver.findElement(By.linkText("muokkaa"));
-        element.click();
-    }
-
-    @When("author is edited to ..1..")
-    public void editAuthorNameInEditView(){
-        WebElement element=driver.findElement(By.name("book-author"));
-        element.sendKeys("..1..");
-        element = driver.findElement(By.name("add-book-button"));
-        element.submit();
-    }
-
-    @Then("tip list contains new author name ..1..")
-    public void tipListShowsCorrectEditedAuthorName(){
-        //pageHasContent("..1..");
-        //WAITING FOR WORKING EDIT CONFIRMATION
-    }
 
     //helper-methods
 

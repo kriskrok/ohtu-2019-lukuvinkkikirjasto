@@ -58,39 +58,6 @@ public class PodcastDao  implements LukuvinkkiDao {
         return podcasts;
     }
 
-    public Podcast findById(String lukuvinkkiId) {
-        Podcast podcast = new Podcast();
-
-        try {
-            Connection conn = database.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID);
-            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
-
-            ResultSet rs = stmt.executeQuery();
-            boolean hasOne = rs.next();
-            if (!hasOne) {
-                return null;
-            }
-
-            podcast = new Podcast();
-            podcast.id = rs.getInt("podcast_id");
-            podcast.creator = rs.getString("creator");
-            podcast.title = rs.getString("episode_title");
-            podcast.description = rs.getString("description");
-            podcast.series = rs.getString("series");
-            podcast.url = rs.getString("url");
-
-            stmt.close();
-            rs.close();
-            conn.close();
-
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-
-        return podcast;
-    }
-
     public void insert(String title, String series, String creator, String url, String description) throws Exception {
         Connection conn = database.getConnection();
 
@@ -147,29 +114,4 @@ public class PodcastDao  implements LukuvinkkiDao {
         }
     }
 
-    public void update(Podcast pod) {
-
-        try {
-            Connection conn = database.getConnection();
-
-            PreparedStatement stmt = conn.prepareStatement(UPDATE);
-            stmt.setString(1, pod.title);
-            stmt.setString(2, pod.creator);
-            stmt.setString(3, pod.series);
-            stmt.setString(4, pod.description);
-            stmt.setString(5, pod.url);
-            stmt.setInt(6, pod.id);
-            stmt.executeUpdate();
-
-            stmt.close();
-            conn.close();
-
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-    }
-
-    public void update (String lukuvinkkiId) {
-        //not yet implemented
-    }
 }

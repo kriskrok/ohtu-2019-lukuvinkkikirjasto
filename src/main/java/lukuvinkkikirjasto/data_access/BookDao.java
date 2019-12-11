@@ -61,38 +61,6 @@ public class BookDao implements LukuvinkkiDao {
         return books;
     }
 
-    public Book findById(String lukuvinkkiId) {
-        Book book = new Book();
-
-        try {
-            Connection conn = database.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID);
-            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
-
-            ResultSet rs = stmt.executeQuery();
-            boolean hasOne = rs.next();
-            if (!hasOne) {
-                return null;
-            }
-
-            book.id = rs.getInt("book_id");
-            book.title = rs.getString("title");
-            book.author = rs.getString("author");
-            book.url = rs.getString("url");
-            book.description = rs.getString("description");
-            book.comment = rs.getString("comment");
-            book.isbn = rs.getString("isbn");
-
-            stmt.close();
-            rs.close();
-            conn.close();
-
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-
-        return book;
-    }
 
     public void insert(String title, String author) throws Exception {
         Connection conn = database.getConnection();
@@ -147,42 +115,4 @@ public class BookDao implements LukuvinkkiDao {
         }
     }
 
-    public void update(Book book) {
-        String UPDATE = "UPDATE Book SET title = ?, author = ?, description = ?, comment = ?, url = ? WHERE id = ?";
-
-        try {
-            Connection conn = database.getConnection();
-
-            PreparedStatement stmt = conn.prepareStatement(UPDATE);
-            stmt.setString(1, book.title);
-            stmt.setString(2, book.author);
-            stmt.setString(3, book.description);
-            stmt.setString(4, book.comment);
-            stmt.setString(5, book.url);
-            stmt.setInt(6, book.id);
-            stmt.executeUpdate();
-
-            stmt.close();
-            conn.close();
-
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-    }
-
-    public void update(String lukuvinkkiId) {
-
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        try {
-            conn = database.getConnection();
-            stmt = conn.prepareStatement("SELECT FROM Book WHERE lukuvinkki_id = ?");
-            stmt.setInt(1, Integer.parseInt(lukuvinkkiId));
-        } catch (SQLException ex) {
-            Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 }

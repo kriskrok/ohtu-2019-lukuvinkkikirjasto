@@ -8,7 +8,6 @@ public class Podcast extends Lukuvinkki {
     public String url;
     
     public Podcast() {
-        //empty constructor, dependency injections are the way forward!
         this("", "", "", "", "");
     }
     

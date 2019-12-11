@@ -53,8 +53,5 @@ public class BookDaoForTests extends BookDao {
         return null;
     }
 
-    @Override
-    public void update(String lukuvinkkiId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 }
