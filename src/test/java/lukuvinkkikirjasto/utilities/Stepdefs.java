@@ -1,4 +1,5 @@
 package lukuvinkkikirjasto.utilities;
+
 import lukuvinkkikirjasto.domain.*;
 import lukuvinkkikirjasto.utilities.*;
 
@@ -6,9 +7,12 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.Assert.*;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,12 +27,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Stepdefs {
     WebDriver driver = new HtmlUnitDriver();
     String baseUrl = "http://localhost:4567";
-    
+
     @Given("lisaa lukuvinkki is selected")
     public void commandAddNewBookSelected() throws Throwable {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("Lisää lukuvinkki"));
-        element.click();  
+        element.click();
     }
 
 
@@ -37,7 +41,7 @@ public class Stepdefs {
     @Given("option kirja is selected")
     public void commandTypeOfTipIsBookIsSelected() throws Throwable {
         WebElement element = driver.findElement(By.name("book"));
-        element.click();  
+        element.click();
         element = driver.findElement(By.name("typeOfReadingTipButton"));
         element.click();
     }
@@ -46,7 +50,7 @@ public class Stepdefs {
     public void thePageHasText(String content) {
         pageHasContent(content);
     }
-    
+
     @When("a valid booktitle {string} and author {string} are entered")
     public void validBookTitleAndAuthorAreEntered(String bookTitle, String author) {
         bookTitleAndAuthorAreGiven(bookTitle, author);
@@ -94,7 +98,7 @@ public class Stepdefs {
     public void commandCheckTheReadingTipsIsSelected() throws Throwable {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("Selaile lukuvinkkejä"));
-        element.click();  
+        element.click();
     }
 
     @Given("one book with title {string} and author {string} has already been successfully added")
@@ -103,7 +107,7 @@ public class Stepdefs {
         WebElement element = driver.findElement(By.linkText("Lisää lukuvinkki"));
         element.click();
         element = driver.findElement(By.name("book"));
-        element.click();  
+        element.click();
         element = driver.findElement(By.name("typeOfReadingTipButton"));
         element.click();
         bookTitleAndAuthorAreGiven(bookTitle, author);
@@ -114,58 +118,49 @@ public class Stepdefs {
     // Tests for deleting a reading tip
 
     @Given("testbook has been added to reading tips")
-    public void addTestBook(){
+    public void addTestBook() {
         bookTitleAndAuthorAreGiven("AbCdEfG54321", "....");
     }
 
-    @Given("poista lukuvinkki is selected")
-    public void commandCheckDeleteTipIsSelected() throws Throwable {
-        //driver.get(baseUrl + "/lukuvinkit");
-        //WebElement element = driver.findElement(By.linkText("poista"));
-        //element.click();
-        //driver.findElement(By.xpath("//td[@for='AbCdEfG54321']/following::td[5]")).click();
-
-    }
-
     @Then("the page has content {string}")
-    public void pageHasExpectedContent(String content){
+    public void pageHasExpectedContent(String content) {
         pageHasContent(content);
     }
 
     @When("poista lukuvinkki is selected until no tips remain")
-    public void allReadingTipsAreRemoved(){
-        while(driver.getPageSource().contains("poista")){
-            WebElement element= driver.findElement(By.linkText("poista"));
+    public void allReadingTipsAreRemoved() {
+        while (driver.getPageSource().contains("poista")) {
+            WebElement element = driver.findElement(By.linkText("poista"));
             element.click();
         }
     }
 
     // Test for adding a new podcast
 
-    @Given("option podcast is selected") 
+    @Given("option podcast is selected")
     public void commandTypeOfTipIsPodcastIsSelected() {
         WebElement element = driver.findElement(By.name("podcast"));
-        element.click();  
+        element.click();
         element = driver.findElement(By.name("typeOfReadingTipButton"));
         element.click();
     }
 
-    @When("a valid episode title {string} is given and other fields are empty") 
+    @When("a valid episode title {string} is given and other fields are empty")
     public void aValidEpisodeTitleAndNoOtherFieldsAreEntered(String title) {
-        podcastDataIsEntered(title, "", "", "");   
+        podcastDataIsEntered(title, "", "", "");
     }
 
-    @When("an invalid episode title {string} is given and other fields are empty") 
+    @When("an invalid episode title {string} is given and other fields are empty")
     public void anInvalidEpisodeTitleAndNoOtherFieldsAreEntered(String title) {
-        podcastDataIsEntered(title, "", "", "");   
+        podcastDataIsEntered(title, "", "", "");
     }
 
-    @When("a valid episode title and series title {string} are given and other fields are empty") 
+    @When("a valid episode title and series title {string} are given and other fields are empty")
     public void aValidSeriesAndEpisodeTitleAndNoOtherFieldsAreEntered(String seriesTitle) {
-        podcastDataIsEntered("Podcast-Guru", seriesTitle, "", "");   
-    }    
+        podcastDataIsEntered("Podcast-Guru", seriesTitle, "", "");
+    }
 
-    @When("a valid episode title and an invalid series title {string} are given and other fields are empty") 
+    @When("a valid episode title and an invalid series title {string} are given and other fields are empty")
     public void anInvalidPodcastSeriesTitleAndvalidEpisodeTitleAreEntered(String seriesTitle) {
         podcastDataIsEntered("Podcast-Guru", seriesTitle, "", "");
     }
@@ -174,8 +169,6 @@ public class Stepdefs {
     public void aValidEpisodeTitleAndAnInvalidCreatorNameAreEntered(String creator) {
         podcastDataIsEntered("Podcast-Guru", "", creator, "");
     }
-
-
 
 
     //helper-methods
@@ -201,7 +194,7 @@ public class Stepdefs {
         element = driver.findElement(By.name("book-author"));
         element.sendKeys(author);
         element = driver.findElement(By.name("add-book-button"));
-        element.submit(); 
+        element.submit();
     }
 
     private void podcastDataIsEntered(String title, String series, String author, String url) {
@@ -215,8 +208,8 @@ public class Stepdefs {
         element = driver.findElement(By.name("podcast-series"));
         element.sendKeys(series);
         element = driver.findElement(By.name("add-podcast-button"));
-        element.submit(); 
+        element.submit();
     }
 
-    
+
 }

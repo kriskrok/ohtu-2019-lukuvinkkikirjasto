@@ -6,11 +6,11 @@ public class Podcast extends Lukuvinkki {
     public String description;
     public String series;
     public String url;
-    
+
     public Podcast() {
         this("", "", "", "", "");
     }
-    
+
     public Podcast(String episodeTitle, String series, String creator, String url, String description) {
 
         this.title = episodeTitle;
@@ -46,12 +46,12 @@ public class Podcast extends Lukuvinkki {
 
     @Override
     public String toString() {
-        if(creator.length() == 0) {
+        if (creator.length() == 0) {
             return title + " - " + url;
         }
         return creator + " - " + title + " - " + url;
     }
-    
+
 
 }
 

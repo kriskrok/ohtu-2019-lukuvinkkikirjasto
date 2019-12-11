@@ -2,7 +2,9 @@ package lukuvinkkikirjasto.data_access;
 
 import java.sql.*;
 import java.io.File;
+
 import org.sqlite.SQLiteConfig;
+
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,7 +13,7 @@ public class Database {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
-            System.err.println("Unable to load JDBC driver, beware!" +e);
+            System.err.println("Unable to load JDBC driver, beware!" + e);
         }
     }
 
@@ -33,7 +35,7 @@ public class Database {
     so must be enabled separately for each database connection.
     See: https://sqlite.org/foreignkeys.html
      */
-    public Connection getConnection() throws Exception{
+    public Connection getConnection() throws Exception {
         Connection connection = null;
         try {
             SQLiteConfig config = new SQLiteConfig();
@@ -71,11 +73,8 @@ public class Database {
     }
 
     public void initializeDatabase() {
-        System.out.println("Am I here");
         try {
             Connection conn = getConnection();
-
-            conn.createStatement().execute("PRAGMA foreign_keys = ON");
 
             conn.prepareStatement("DROP TABLE IF EXISTS Lukuvinkki;").executeUpdate();
             conn.prepareStatement("CREATE TABLE Lukuvinkki (id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -99,7 +98,7 @@ public class Database {
                     "comment VARCHAR(1023) DEFAULT '', url VARCHAR(255) DEFAULT ''," +
                     "status INTEGER CHECK(status IN (0,1)) DEFAULT '0', read DATE, lukuvinkki_id INTEGER," +
                     "FOREIGN KEY (lukuvinkki_id) REFERENCES Lukuvinkki(id)" +
-                        "ON UPDATE CASCADE ON DELETE CASCADE);").executeUpdate();
+                    "ON UPDATE CASCADE ON DELETE CASCADE);").executeUpdate();
 
             conn.close();
         } catch (Exception e) {

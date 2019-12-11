@@ -4,9 +4,10 @@ import java.sql.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import lukuvinkkikirjasto.domain.*;
 
-public class PodcastDao  implements LukuvinkkiDao {
+public class PodcastDao implements LukuvinkkiDao {
     private final String DELETE = "DELETE FROM Podcast WHERE podcast_id = ?";
     private final String FIND_BY_ID = "SELECT * FROM Podcast WHERE lukuvinkki_id = ?";
     private final String FIND_ALL = "SELECT * FROM Podcast ORDER BY podcast_id";

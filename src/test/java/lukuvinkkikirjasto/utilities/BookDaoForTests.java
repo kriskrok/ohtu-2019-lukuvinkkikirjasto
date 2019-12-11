@@ -13,7 +13,7 @@ public class BookDaoForTests extends BookDao {
     int maxId = 1;
     private List<Book> books;
 
-    public BookDaoForTests()  throws Exception {
+    public BookDaoForTests() throws Exception {
         super(null);
         this.books = new ArrayList<>();
     }
@@ -36,7 +36,7 @@ public class BookDaoForTests extends BookDao {
     public void delete(String lukuvinkkiId) {
         Book bk = books.stream().filter(book -> book.id == Integer.parseInt(lukuvinkkiId)).findFirst().orElseGet(null);
         books.remove(bk);
-        
+
     }
 
     private int generateId() {

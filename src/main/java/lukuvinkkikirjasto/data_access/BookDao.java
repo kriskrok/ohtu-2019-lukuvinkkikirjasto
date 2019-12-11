@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import lukuvinkkikirjasto.domain.*;
 
 public class BookDao implements LukuvinkkiDao {
@@ -49,7 +50,7 @@ public class BookDao implements LukuvinkkiDao {
                 book.description = " ";
                 book.comment = " ";
                 books.add(book);
-                
+
             }
             stmt.close();
             rs.close();

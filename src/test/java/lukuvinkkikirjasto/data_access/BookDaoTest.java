@@ -7,15 +7,17 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import java.sql.*;
 import java.util.*;
+import java.io.File;
 
 public class BookDaoTest {
 
     private BookDao bookDao;
     private Database database = new Database();
     int testiId;
-    private Database mockDB;
+    private Database mockDB = mock(Database.class);
 
 
     @Before
@@ -55,7 +57,7 @@ public class BookDaoTest {
         conn.close();
     }
 
-    public void removeTestLukuvinkki() throws Exception{
+    public void removeTestLukuvinkki() throws Exception {
         try {
             Connection conn = database.getConnection();
 
@@ -76,14 +78,14 @@ public class BookDaoTest {
     }
 
     @Test
-    public void findAllReturnsCorrectBooks() throws Exception{
+    public void findAllReturnsCorrectBooks() throws Exception {
         setTestLukuvinkki();
 
         List<Lukuvinkki> books = bookDao.findAll();
-        boolean found=false;
-        for (Lukuvinkki book:books){
-            if (book.getTitle().equals("Kirja testauksesta")){
-                found= true;
+        boolean found = false;
+        for (Lukuvinkki book : books) {
+            if (book.getTitle().equals("Kirja testauksesta")) {
+                found = true;
                 break;
             }
         }
@@ -92,7 +94,7 @@ public class BookDaoTest {
     }
 
     @Test
-    public void deleteRemovesRightLukuvinkki() throws Exception{
+    public void deleteRemovesRightLukuvinkki() throws Exception {
         setTestLukuvinkki();
         bookDao.delete(String.valueOf(testiId));
         List<Book> books = new ArrayList<>();
@@ -115,10 +117,10 @@ public class BookDaoTest {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        boolean found=false;
-        for (Book book:books){
-            if (book.getBooktitle().equals("Kirja testauksesta")){
-                found= true;
+        boolean found = false;
+        for (Book book : books) {
+            if (book.getBooktitle().equals("Kirja testauksesta")) {
+                found = true;
                 break;
             }
         }
@@ -127,15 +129,15 @@ public class BookDaoTest {
     }
 
     @Test
-    public void checkDatabaseConnectionCallsDatabase() throws  Exception{
-        mockDB = mock(Database.class);
-        LukuvinkkiDao testDao  = new BookDao(mockDB);
+    public void checkDatabaseConnectionCallsDatabase() throws Exception {
+        LukuvinkkiDao testDao = new BookDao(mockDB);
         bookDao.checkDatabaseConnection();
         verify(mockDB, times(1)).getConnection();
     }
 
+
     @Test
-    public void insertAddsLukuvinkkiToDatabase()throws Exception{
+    public void insertAddsLukuvinkkiToDatabase() throws Exception {
         bookDao.insert("Kirjoista", "Kirjailija");
         Book book = new Book();
         try {
@@ -155,16 +157,16 @@ public class BookDaoTest {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        assertTrue(book!=null);
-        testiId=book.id;
-        removeTestLukuvinkki();
+        int id = book.getId();
+
+        assertTrue(book != null);
+        Connection conn = database.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Book WHERE book_id = ?");
+        stmt.setInt(1, id);
+        stmt.executeUpdate();
+        stmt.close();
+
     }
 }
 
-/*  @Test
-    public void aNewBookWithValidInputsCanBeAdded() throws Exception {
-        dao.newBook("TestName", "TestWriter", 2);
-        this.books = dao.getBooks();
-        assertEquals(1, this.books.size());
-    }
-*/

@@ -5,7 +5,7 @@ import org.junit.rules.ExternalResource;
 import spark.Spark;
 
 public class ServerRule extends ExternalResource {
-    
+
     private final int port;
 
     public ServerRule(int port) {
@@ -24,5 +24,5 @@ public class ServerRule extends ExternalResource {
     protected void after() {
         Spark.stop();
     }
-    
+
 }

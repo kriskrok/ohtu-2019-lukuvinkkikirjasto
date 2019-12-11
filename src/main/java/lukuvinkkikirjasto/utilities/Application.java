@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 
 import spark.ModelAndView;
+
 import static spark.Spark.*;
+
 import spark.template.velocity.VelocityTemplateEngine;
 import lukuvinkkikirjasto.domain.*;
 import lukuvinkkikirjasto.data_access.*;
@@ -21,15 +23,12 @@ public class Application {
 
     public static void main(String[] args) throws Exception {
 
-
-
         if (db == null) {
             db = new Database();
         }
 
-        
         port(findOutPort());
-        
+
         if (bookDao == null) {
             bookDao = new BookDao(db);
         }
@@ -56,10 +55,10 @@ public class Application {
             }
             if (books.size() > 0) {
                 model.put("books", books);
-            } 
+            }
             if (podcasts.size() > 0) {
                 model.put("podcasts", podcasts);
-            } 
+            }
             model.put("template", "templates/lukuvinkit.html");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
@@ -90,21 +89,18 @@ public class Application {
         post("/tyyppi", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
             String typeOfReadingTip = request.queryParams("typeOfReadingTip");
-            
+
             if (typeOfReadingTip.equals("book")) {
                 model.put("template", "templates/addNewBook.html");
                 return new ModelAndView(model, layout);
-                
-            } else if (typeOfReadingTip.equals("podcast")) {
+
+            } else {
                 model.put("template", "templates/addNewPodcast.html");
                 return new ModelAndView(model, layout);
-            } else {
-                model.put("template", "templates/typeOfReadingTip.html");
-                return new ModelAndView(model, layout);
             }
-            
+
         }, new VelocityTemplateEngine());
-        
+
         // Book
 
         get("/kirja", (request, response) -> {
@@ -115,13 +111,13 @@ public class Application {
 
         post("/kirja", (request, response) -> {
             HashMap<String, String> model = new HashMap<>();
-            
+
             String booktitle = request.queryParams("book-title");
             String author = request.queryParams("book-author");
             String descr = request.queryParams("book-description");
             String comment = request.queryParams("book-comment");
             String url = request.queryParams("book-url");
-            
+
             if (!validateInput(booktitle, 3, 100)) {
                 model.put("virhe", "Kirjan nimen tulee olla 3-100 merkkiä");
                 model.put("template", "templates/addNewBook.html");
@@ -133,21 +129,21 @@ public class Application {
                 model.put("template", "templates/addNewBook.html");
                 return new ModelAndView(model, layout);
             }
-            
-            if(!validateInput(descr, 0, 255)) {
+
+            if (!validateInput(descr, 0, 255)) {
                 model.put("virhe", "Kuvauksen on oltava alle 255 merkkiä");
                 model.put("template", "templates/addNewBook");
                 return new ModelAndView(model, layout);
             }
-            
-            if(!validateInput(comment, 0, 255)) {
+
+            if (!validateInput(comment, 0, 255)) {
                 model.put("virhe", "Kommentin on oltava alle 255 merkkiä");
                 model.put("template", "templates/addNewBook");
                 return new ModelAndView(model, layout);
             }
-            
+
             bookDao.insert(booktitle, author);
-            
+
             model.put("vahvistus", booktitle + " tallennettu!");
             model.put("template", "templates/addNewBook.html");
             return new ModelAndView(model, layout);
@@ -170,7 +166,7 @@ public class Application {
             String series = request.queryParams("podcast-series");
             String url = request.queryParams("podcast-url");
             String description = request.queryParams("podcast-description");
-            
+
             if (!validateInput(episodeTitle, 3, 100)) {
                 model.put("virhe", "Podcastin nimen tulee olla 3-100 merkkiä");
                 model.put("template", "templates/addNewPodcast.html");
@@ -189,14 +185,14 @@ public class Application {
                 return new ModelAndView(model, layout);
             }
 
-            podcastDao.insert(episodeTitle, series, creator, url, description );
+            podcastDao.insert(episodeTitle, series, creator, url, description);
 
             model.put("vahvistus", episodeTitle + " tallennettu!");
             model.put("template", "templates/addNewPodcast.html");
             return new ModelAndView(model, layout);
 
         }, new VelocityTemplateEngine());
-  
+
     }
 
     private static boolean validateInput(String input, int minimumLenght, int maximumLength) {
@@ -205,7 +201,7 @@ public class Application {
         }
         return true;
     }
-       
+
     static int findOutPort() {
         if (portFromEnv != null) {
             return Integer.parseInt(portFromEnv);
@@ -217,7 +213,10 @@ public class Application {
 
     static String portFromEnv = new ProcessBuilder().environment().get("PORT");
 
+
     static void setEnvPort(String port) {
         portFromEnv = port;
     }
+
+
 }
