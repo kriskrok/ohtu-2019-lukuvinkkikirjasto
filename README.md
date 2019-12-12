@@ -38,7 +38,7 @@ Vaihtoehtoisesti 1. releasin yhteydessä olevan jar-tiedoston voi ladata ja sen 
 - User story määritelty INVEST-mallilla
 - Hyväksymiskriteerit on määritelty
 - Story jaettu toteutettavissa oleviin teknisiin taskeihin
-- Taskeille on nimetty tekijät
+- Taskeille on nimetty tekijä(t)
 - Taskeille on arvioitu työaika
 - Kaikki yllämainittu on dokumentoitu product backlogiin ja sprint backlogiin
 
