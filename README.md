@@ -12,7 +12,7 @@
 
 
 #### [Product backlog](https://docs.google.com/spreadsheets/d/1LkLCp_9h6MrogtcsBB0s-k0wTKV7P8TSKj_3ccCMi-Y/edit?usp=sharing)
-
+#### [Loppuraportti](https://github.com/kriskrok/ohtu-2019-lukuvinkkikirjasto/blob/master/documents/Loppuraportti.pdf)
 ### Laadunhallinta
 
 [Jatkuva integraatio (CircleCI)](https://circleci.com/gh/kriskrok/ohtu-2019-lukuvinkkikirjasto)
